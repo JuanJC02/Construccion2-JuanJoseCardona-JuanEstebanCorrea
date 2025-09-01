@@ -10,6 +10,15 @@ public class Bill {
     private Long policyNumber;
     private String policyExpiration;
     private String endDate;
+    private Appointment appointment;
+
+    public Appointment getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
 
     public String getPatientName() {
         return patientName;
