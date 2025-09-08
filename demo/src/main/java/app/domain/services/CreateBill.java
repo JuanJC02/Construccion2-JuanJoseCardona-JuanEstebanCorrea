@@ -10,7 +10,7 @@ import app.domain.ports.BillPort;
 import app.domain.ports.InsurancePort;
 import app.domain.ports.PatientPort;
 import app.domain.ports.UserPort;
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 public class CreateBill {
 
@@ -29,15 +29,15 @@ public class CreateBill {
         }
 
         if (bill == null) {
-            throw new IllegalArgumentException("no hay factura");
+            throw new Exception("no hay factura");
         }
 
         Appointment appointment = bill.getAppointment();
         if (appointment == null) {
-            throw new Exception("la factura debe referenciar una cita");
+            throw new Exception("la factura debe tener una cita adjunta");
         }
 
-        Patient patient = appointment.getPatient();
+        Patient patient = patientPort.findByDocument(appointment.getPatient().getDocument());
         if (patient == null) {
             throw new Exception("la cita debe tener un paciente asociado");
         }
@@ -63,14 +63,15 @@ public class CreateBill {
             throw new Exception("se requiere el numero de poliza de el paciente");
         }
         if (patientInsurance.getPolicyExpirationDate() == null) {
-            throw new Exception("se requiere la fecha de expiracion de la poliza");
+            throw new Exception("se requiere la fecha de expiracion de la poliza de el paciente");
         }
 
-        LocalDateTime apDate = appointment.getAppointmentDate();
+        Date apDate = appointment.getAppointmentDate();
         if (apDate == null) {
             throw new Exception("se debe programar la cita antes de crear la factura");
         }
-
+        
+        /*
         Patient found;
         try {
             found = patientPort.findByPatient(patient);
@@ -81,7 +82,8 @@ public class CreateBill {
         if (found == null) {
             throw new Exception("paciente no encontrado. Registra un nuevo paciente antes de registrar una factura");
         }
-
+        */
+        
         billPort.save(bill);
     }
 }

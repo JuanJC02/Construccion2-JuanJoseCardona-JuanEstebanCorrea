@@ -5,5 +5,4 @@ import app.domain.model.Insurance;
 public interface InsurancePort {
     void save(Insurance insurance) throws Exception;
     public Insurance findById(Long id) throws Exception;
-    java.util.Optional<Insurance> findPatientByDocument(Long patientDocument) throws Exception;
 }

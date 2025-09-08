@@ -4,7 +4,6 @@ package app.domain.model;
 import java.time.LocalDate;
 
 public class Insurance {
-    private Long id;
     private String companyName;
     private Long policyNumber;
     private boolean policyStatus;
@@ -21,14 +20,6 @@ public class Insurance {
 
     public String getCompanyName() {
         return companyName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setCompanyName(String companyName) {

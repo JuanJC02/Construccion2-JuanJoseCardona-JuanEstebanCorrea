@@ -1,5 +1,6 @@
 package app.domain.services;
 
+import app.domain.model.EmergencyContact;
 import app.domain.model.Patient;
 import app.domain.model.User;
 import app.domain.model.enums.Role;
@@ -43,7 +44,12 @@ public class CreatePatient {
         if (pat2.getUsername() != null) {
             throw new Exception("ya existe un paciente registrado con ese nombre de usuario");
         }
-
+        
+        EmergencyContact ec = patient.getEmergencyContact();
+        ec.setName(patient.getName());
+        ec.setLastName(patient.getLastName());
+        ec.setPhoneNumber(patient.getPhonenumber());
+        patient.setEmergencyContact(ec);
         patientPort.save(patient);
     }
 

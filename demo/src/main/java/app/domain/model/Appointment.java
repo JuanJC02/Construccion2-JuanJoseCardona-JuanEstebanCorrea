@@ -1,10 +1,10 @@
 
 package app.domain.model;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 public class Appointment{
-    private LocalDateTime appointmentDate;
+    private Date appointmentDate;
     private Patient patient;
     private User attendingPhysician;
     private Long appointmentId;
@@ -33,11 +33,11 @@ public class Appointment{
         this.patient = patient;
     }
 
-    public LocalDateTime getAppointmentDate() {
+    public Date getAppointmentDate() {
         return appointmentDate;
     }
 
-    public void setAppointmentDate(LocalDateTime appointmentDate) {
+    public void setAppointmentDate(Date appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
     

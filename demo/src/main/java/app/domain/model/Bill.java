@@ -1,23 +1,21 @@
-
 package app.domain.model;
 
 public class Bill {
+
     private String patientName;
     private int patientAge;
     private Long patientDocument;
-    private String treatingPhysicianName;
-    private String insuranceCompanyName;
-    private Long policyNumber;
-    private String policyExpiration;
+    private User treatingPhysicianName;
     private String endDate;
     private Appointment appointment;
+    private Insurance insurance;
 
-    public Appointment getAppointment() {
-        return appointment;
+    public User getTreatingPhysicianName() {
+        return treatingPhysicianName;
     }
 
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
+    public void setTreatingPhysicianName(User treatingPhysicianName) {
+        this.treatingPhysicianName = treatingPhysicianName;
     }
 
     public String getPatientName() {
@@ -44,38 +42,6 @@ public class Bill {
         this.patientDocument = patientDocument;
     }
 
-    public String getTreatingPhysicianName() {
-        return treatingPhysicianName;
-    }
-
-    public void setTreatingPhysicianName(String treatingPhysicianName) {
-        this.treatingPhysicianName = treatingPhysicianName;
-    }
-
-    public String getInsuranceCompanyName() {
-        return insuranceCompanyName;
-    }
-
-    public void setInsuranceCompanyName(String insuranceCompanyName) {
-        this.insuranceCompanyName = insuranceCompanyName;
-    }
-
-    public Long getPolicyNumber() {
-        return policyNumber;
-    }
-
-    public void setPolicyNumber(Long policyNumber) {
-        this.policyNumber = policyNumber;
-    }
-
-    public String getPolicyExpiration() {
-        return policyExpiration;
-    }
-
-    public void setPolicyExpiration(String policyExpiration) {
-        this.policyExpiration = policyExpiration;
-    }
-
     public String getEndDate() {
         return endDate;
     }
@@ -83,5 +49,20 @@ public class Bill {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
-    
+
+    public Appointment getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
+
+    public Insurance getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Insurance insurance) {
+        this.insurance = insurance;
+    }
 }

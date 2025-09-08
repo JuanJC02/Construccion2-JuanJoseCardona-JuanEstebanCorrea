@@ -37,6 +37,6 @@ public class UserManager {
         if (updatedUser.getAddress() != null) {
             userToUpdate.setAddress(updatedUser.getAddress());
         }
-        userPort.save(userToUpdate);
+        userPort.update(userToUpdate);
     }
 }

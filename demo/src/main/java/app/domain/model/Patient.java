@@ -10,11 +10,29 @@ public class Patient {
     private String username;
     private String password;
     private String name;
+    private String lastName;
     private Long document;
     private String email;
     private String phonenumber;
     private String address;
     private Role role;
+    private EmergencyContact emergencyContact;
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public EmergencyContact getEmergencyContact() {
+        return emergencyContact;
+    }
+
+    public void setEmergencyContact(EmergencyContact emergencyContact) {
+        this.emergencyContact = emergencyContact;
+    }
 
     public char getGender() {
         return gender;
