@@ -2,27 +2,15 @@ package app.domain.services;
 
 import app.domain.model.ClinicalHistory;
 import app.domain.model.Patient;
-import app.domain.model.User;
-import app.domain.model.enums.Role;
 import app.domain.ports.ClinicalHistoryPort;
 import app.domain.ports.PatientPort;
-import app.domain.ports.UserPort;
 
 public class ClinicalHistoryService {
 
     private ClinicalHistoryPort clinicalHistoryPort;
     private PatientPort patientPort;
-    private UserPort userPort;
 
-    public void createClinicalHistory(User actor, Long patientDocument, ClinicalHistory history) throws Exception {
-        User actor1 = userPort.findByActor(actor);
-        if (actor1 == null) {
-            throw new Exception("actor no encontrado: no se pueden hacer modificaciones");
-        }
-        if (!actor1.getRole().equals(Role.DOCTOR)) {
-            throw new Exception("el actor no tiene Permisos para modificar los datos");
-        }
-
+    public void createClinicalHistory(Long patientDocument, ClinicalHistory history) throws Exception {
         if (patientDocument == null) {
             throw new Exception("documento de paciente es nulo");
         }
@@ -35,15 +23,7 @@ public class ClinicalHistoryService {
         clinicalHistoryPort.save(history);
     }
 
-    public void updateClinicalHistory(User actor, Long patientDocument, ClinicalHistory history) throws Exception {
-        User actor1 = userPort.findByActor(actor);
-        if (actor1 == null) {
-            throw new Exception("actor no encontrado: no se pueden hacer modificaciones");
-        }
-        if (!actor1.getRole().equals(Role.DOCTOR)) {
-            throw new Exception("el actor no tiene Permisos para modificar los datos");
-        }
-
+    public void updateClinicalHistory(Long patientDocument, ClinicalHistory history) throws Exception {
         if (patientDocument == null) {
             throw new Exception("documento de paciente es nulo");
         }

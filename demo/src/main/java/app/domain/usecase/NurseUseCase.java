@@ -14,8 +14,12 @@ public class NurseUseCase {
         registerVisit.registerVisit(actor, visit);
     }
 
-    public Patient findPatient(User actor, Long patientId) throws Exception {
-        return findPatient.findPatient(actor, patientId);
+    public Patient findPatient(Long actorDocument, Long patientDocument) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol)) {
+            return findPatient.findPatient(patientDocument);
+        } else {
+            throw new Exception("no se puede ejecutar la accion por falta de permisos");
+        }
     }
     
     public List findOrders(User actor, Long patientDocument, String orderType) throws Exception {

@@ -1,7 +1,10 @@
 package app.domain.usecase;
 
 import app.domain.model.*;
+import app.domain.model.enums.Role;
+import static app.domain.model.enums.Role.DOCTOR;
 import app.domain.services.*;
+import app.domain.validators.RoleValidator;
 
 public class DoctorUseCase {
 
@@ -10,28 +13,62 @@ public class DoctorUseCase {
     private CreateMedicamentOrder createMedicamentOrder;
     private CreateProcedureOrder createProcedureOrder;
     private FindPatient findPatient;
+    private RoleValidator roleValidator;
+    
+    private final Role rol = DOCTOR;
 
-    public void createClinicalHistory(User actor, Long patientDocument, ClinicalHistory history) throws Exception {
-        clinicalHistoryService.createClinicalHistory(actor, patientDocument, history);
+    public void createClinicalHistory(Long actorDocument, Long patientDocument, ClinicalHistory history) throws Exception {
+        if(roleValidator.isValidRole(actorDocument, rol)){
+            clinicalHistoryService.createClinicalHistory(patientDocument, history);
+        }
+        else{
+            throw new Exception("no se puede ejecutar la accion por falta de permisos");
+        }
     }
 
-    public void updateClinicalHistory(User actor, Long patientDocument, ClinicalHistory history) throws Exception {
-        clinicalHistoryService.updateClinicalHistory(actor, patientDocument, history);
+    public void updateClinicalHistory(Long actorDocument, Long patientDocument, ClinicalHistory history) throws Exception {
+        if(roleValidator.isValidRole(actorDocument, rol)){
+            clinicalHistoryService.updateClinicalHistory(patientDocument, history);
+        }
+        else{
+            throw new Exception("no se puede ejecutar la accion por falta de permisos");
+        }
     }
 
-    public void createDiagnosticHelpOrder(User actor, Long patientDocument, DiagnosticHelpOrder order) throws Exception {
-        createDiagnosticHelpOrder.createDiagnosticHelpOrder(actor, patientDocument, order);
+    public void createDiagnosticHelpOrder(Long actorDocument, Long patientDocument, DiagnosticHelpOrder order) throws Exception {
+        if(roleValidator.isValidRole(actorDocument, rol)) {
+            createDiagnosticHelpOrder.createDiagnosticHelpOrder(patientDocument, order);
+        }
+        else{
+            throw new Exception("no se puede ejecutar la accion por falta de permisos");
+        }
     }
 
-    public void createMedicamentOrder(User actor, Long patientDocument, MedicamentOrder order) throws Exception {
-        createMedicamentOrder.createMedicamentOrder(actor, patientDocument, order);
+    public void createMedicamentOrder(Long actorDocument, Long patientDocument, MedicamentOrder order) throws Exception {
+        if(roleValidator.isValidRole(actorDocument, rol)) {
+        createMedicamentOrder.createMedicamentOrder(patientDocument, order);
+        }
+        else {
+            throw new Exception("no se puede ejecutar la accion por falta de permisos");
+        }
     }
 
-    public void createProcedureOrder(User actor, Long patientDocument, ProcedureOrder order) throws Exception {
-        createProcedureOrder.createProcedureOrder(actor, patientDocument, order);
+    public void createProcedureOrder(Long actorDocument, Long patientDocument, ProcedureOrder order) throws Exception {
+        if(roleValidator.isValidRole(actorDocument, rol)) {
+            createProcedureOrder.createProcedureOrder(patientDocument, order);
+        }
+        else {
+            throw new Exception("no se puede ejecutar la accion por falta de permisos");
+        }
     }
-
-    public Patient findPatient(User actor, Long patientId) throws Exception {
-        return findPatient.findPatient(actor, patientId);
+    
+    
+    public Patient findPatient(Long actorDocument,Long patientDocument) throws Exception {
+        if(roleValidator.isValidRole(actorDocument, rol)){
+            return findPatient.findPatient(patientDocument);
+        }
+        else{
+            throw new Exception("no se puede ejecutar la accion por falta de permisos");
+        }
     }
 }

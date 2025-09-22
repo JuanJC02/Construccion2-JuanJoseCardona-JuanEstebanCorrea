@@ -2,10 +2,7 @@ package app.domain.services;
 
 import app.domain.model.EmergencyContact;
 import app.domain.model.Patient;
-import app.domain.model.User;
-import app.domain.model.enums.Role;
 import app.domain.ports.PatientPort;
-import app.domain.ports.UserPort;
 import app.domain.validators.SimpleValidators;
 
 public class CreatePatient {

@@ -7,6 +7,15 @@ public class MedicamentOrder {
     private String medicamentName;
     private String dose;
     private String treatmentDuration;
+    private Long patientDocument;
+
+    public Long getPatientDocument() {
+        return patientDocument;
+    }
+
+    public void setPatientDocument(Long patientDocument) {
+        this.patientDocument = patientDocument;
+    }
 
     public Long getOrderNumber() {
         return orderNumber;

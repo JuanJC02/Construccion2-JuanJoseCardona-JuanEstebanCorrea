@@ -10,7 +10,16 @@ public class ProcedureOrder {
     private int cost;
     private boolean requiresSpecialist;
     private Long specialtytId;
+    private Long patientDocument;
 
+    public Long getPatientDocument() {
+        return patientDocument;
+    }
+
+    public void setPatientDocument(Long patientDocument) {
+        this.patientDocument = patientDocument;
+    }
+    
     public Long getOrderNumber() {
         return orderNumber;
     }
