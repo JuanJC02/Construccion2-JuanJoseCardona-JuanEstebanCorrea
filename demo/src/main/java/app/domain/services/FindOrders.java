@@ -11,14 +11,14 @@ import app.domain.ports.ProcedureOrderPort;
 import app.domain.ports.UserPort;
 import java.util.List;
 
-public class NurseOrderSearchService {
+public class FindOrders {
 
     private UserPort userPort;
     private MedicamentOrderPort medicamentOrderPort;
     private ProcedureOrderPort procedureOrderPort;
     private DiagnosticHelpOrderPort diagnosticHelpOrderPort;
 
-    public List findOrdersByPatient(User actor, Long patientDocument, String orderType) throws Exception {
+    public List findOrders(User actor, Long patientDocument, String orderType) throws Exception {
         if(!orderType.equalsIgnoreCase("MEDICAMENT") || !orderType.equalsIgnoreCase("PROCEDURE") || !orderType.equalsIgnoreCase("DIAGNOSTICHELP")) {
             throw new Exception("tipo de ordern invalida");
         }

@@ -2,7 +2,6 @@ package app.domain.usecase;
 
 import app.domain.model.*;
 import app.domain.services.*;
-import java.sql.Date;
 
 public class DoctorUseCase {
 

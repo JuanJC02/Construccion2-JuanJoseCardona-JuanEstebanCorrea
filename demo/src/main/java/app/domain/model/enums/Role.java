@@ -7,6 +7,5 @@ public enum Role {
     INFORMATION_SUPPORT,
     NURSE,
     DOCTOR,
-    USER,
     PATIENT
 }

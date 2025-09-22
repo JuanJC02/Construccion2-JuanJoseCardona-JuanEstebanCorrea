@@ -4,30 +4,19 @@ import app.domain.model.Bill;
 import app.domain.model.Appointment;
 import app.domain.model.Insurance;
 import app.domain.model.Patient;
-import app.domain.model.User;
 import app.domain.model.enums.Role;
 import app.domain.ports.BillPort;
 import app.domain.ports.InsurancePort;
 import app.domain.ports.PatientPort;
-import app.domain.ports.UserPort;
 import java.sql.Date;
 
 public class CreateBill {
 
     private BillPort billPort;
-    private UserPort userPort;
     private PatientPort patientPort;
     private InsurancePort insurancePort;
 
-    public void registerBill(User actor, Bill bill) throws Exception {
-        User actor1 = userPort.findByActor(actor);
-        if (actor1 == null) {
-            throw new Exception("actor no encontrado: no se pueden hacer modificaciones");
-        }
-        if (!actor1.getRole().equals(Role.ADMINISTRATIVE_STAFF)) {
-            throw new Exception("el actor no tiene Permisos para modificar los datos");
-        }
-
+    public void registerBill(Bill bill) throws Exception {
         if (bill == null) {
             throw new Exception("no hay factura");
         }
