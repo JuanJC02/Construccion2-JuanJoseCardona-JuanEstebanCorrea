@@ -1,78 +1,62 @@
 package app.domain.services;
 
 import app.domain.model.Bill;
-import app.domain.model.Appointment;
 import app.domain.model.Insurance;
 import app.domain.model.Patient;
 import app.domain.model.enums.Role;
 import app.domain.ports.BillPort;
 import app.domain.ports.InsurancePort;
 import app.domain.ports.PatientPort;
-import java.sql.Date;
+import app.domain.ports.UserPort;
 
 public class CreateBill {
 
     private BillPort billPort;
     private PatientPort patientPort;
     private InsurancePort insurancePort;
+    private UserPort userPort;
 
-    public void registerBill(Bill bill) throws Exception {
+    public void registerBill(Bill bill, Long treatingPhysicianDocument) throws Exception {
+        //builder minimo patientDocument, treatingPhysicianDocument 
+        if (treatingPhysicianDocument == null || treatingPhysicianDocument.toString().trim().isBlank()) {
+            throw new Exception("No se ha recibido el documento de el medico tratante");
+        }
         if (bill == null) {
-            throw new Exception("no hay factura");
+            throw new Exception("no se ha recibido una factura");
         }
 
-        Appointment appointment = bill.getAppointment();
-        if (appointment == null) {
-            throw new Exception("la factura debe tener una cita adjunta");
-        }
-
-        Patient patient = patientPort.findByDocument(appointment.getPatient().getDocument());
+        Patient patient = patientPort.findByDocument(bill.getPatientDocument());
         if (patient == null) {
-            throw new Exception("la cita debe tener un paciente asociado");
+            throw new Exception("no se ha encontrado un paciente con el documento recibido de la factura");
         }
 
-        if (patient.getName() == null || patient.getName().trim().isEmpty()) {
-            throw new Exception("el paciente no tiene un nombre asociado");
-        }
-        if (patient.getDocument() == null) {
-            throw new Exception("el paciente no posee un documento asociado");
-        }
-        if (!appointment.getAttendingPhysician().getRole().equals(Role.DOCTOR)) {
-            throw new Exception("la cita debe tener un medico asociado");
+        if (bill.getTreatingPhysicianDocument() == null || bill.getTreatingPhysicianDocument().toString().trim().isBlank()) {
+            bill.setTreatingPhysicianDocument(treatingPhysicianDocument);
         }
 
-        Insurance patientInsurance = insurancePort.findById(patient.getDocument());
-        if (patientInsurance == null) {
-            throw new Exception("el paciente no tiene un seguro");
-        }
-        if (patientInsurance.getCompanyName() == null || patientInsurance.getCompanyName().trim().isEmpty()) {
-            throw new Exception("se requiere el nombre de la compañia de seguros de el paciente");
-        }
-        if (patientInsurance.getPolicyNumber() == null) {
-            throw new Exception("se requiere el numero de poliza de el paciente");
-        }
-        if (patientInsurance.getPolicyExpirationDate() == null) {
-            throw new Exception("se requiere la fecha de expiracion de la poliza de el paciente");
+        if (userPort.findDoctorByDocument(treatingPhysicianDocument) == null) {
+            throw new Exception("no se ha encontrado un usuario con el documento del medico tratante");
         }
 
-        Date apDate = appointment.getAppointmentDate();
-        if (apDate == null) {
-            throw new Exception("se debe programar la cita antes de crear la factura");
-        }
-        
-        /*
-        Patient found;
-        try {
-            found = patientPort.findByPatient(patient);
-        } catch (Exception e) {
-            found = null;
+        if (!userPort.findDoctorByDocument(treatingPhysicianDocument).getRole().equals(Role.DOCTOR)) {
+            throw new Exception("el medico tratante no cumple con el rol necesario");
         }
 
-        if (found == null) {
-            throw new Exception("paciente no encontrado. Registra un nuevo paciente antes de registrar una factura");
+        if (patient.getPolicyNumber() != null) {
+            Insurance patientInsurance = insurancePort.findById(patient.getPolicyNumber());
+
+            if (patientInsurance == null) {
+                throw new Exception("no se ha encontrado un seguro con el numero de poliza recibido");
+            }
+
+            bill.setCompanyName(patientInsurance.getCompanyName());
+            bill.setPolicyExpirationDate(patientInsurance.getPolicyExpirationDate());
         }
-        */
-        
+
+        bill.setPatientName(patient.getName());
+        bill.setPatientLastName(patient.getName());
+        bill.setPatientAge(patient.getAge());
+
         billPort.save(bill);
     }
 }

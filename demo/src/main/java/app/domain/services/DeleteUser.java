@@ -2,26 +2,22 @@
 package app.domain.services;
 
 import app.domain.model.User;
-import app.domain.model.enums.Role;
 import app.domain.ports.UserPort;
 
 public class DeleteUser {
     private UserPort userPort;
     
-    public void delete(User user, User actor) throws Exception {
-        User actor1 = userPort.findByActor(actor);
-        if (actor1 == null) {
-            throw new Exception("actor no encontrado: no se puede cambiar el rol");
-        }
-        if (!actor1.getRole().equals(Role.HUMAN_RESOURCES)) {
-            throw new Exception("el actor no tiene Permisos para modificar los roles");
+    public void delete(User user) throws Exception {
+        if (user == null) {
+            throw new Exception("no se ha recibido un usuario");
         }
         
-        if (userPort.findByUser(user) == null) {
-            throw new Exception("no existe un usuario registrado con esa cedula");
+        User us = userPort.findByUser(user);
+        if(us == null) {
+            throw new Exception("no se ha encontrado un usuario similar en la base de datos");
         }
-        if (userPort.findByUser(user) == null) {
-            throw new Exception("no existe un usuario registrado con ese nombre de usuario");
+        if (userPort.findByDocument(us.getDocument()) == null) {
+            throw new Exception("no existe un usuario registrado con esa cedula");
         }
         userPort.delete(user);
     }

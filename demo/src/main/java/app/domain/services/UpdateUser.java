@@ -1,32 +1,34 @@
 package app.domain.services;
 
 import app.domain.model.User;
-import app.domain.model.enums.Role;
 import app.domain.ports.UserPort;
 
-public class UserManager {
+public class UpdateUser {
 
     private UserPort userPort;
 
-    public void updateUser(User updatedUser, User actor) throws Exception {
-        User actor1 = userPort.findByActor(actor);
-        if (actor1 == null) {
-            throw new Exception("actor no encontrado: no se puede cambiar el rol");
-        }
-        if (!actor1.getRole().equals(Role.HUMAN_RESOURCES)) {
-            throw new Exception("el actor no tiene Permisos para modificar los roles");
+    public void updateUser(User updatedUser) throws Exception {
+        
+        if (updatedUser == null) {
+            throw new Exception("no se puede realizar la accion por falta de datos");
         }
 
-        User userToUpdate = userPort.findByUser(updatedUser);
+        User userToUpdate = userPort.findByDocument(updatedUser.getDocument());
         if (userToUpdate == null) {
             throw new Exception("usuario no encontrado: no se pueden actualizar datos");
         }
 
-        if (updatedUser.getUserName() != null) {
-            userToUpdate.setUserName(updatedUser.getUserName());
+        if (updatedUser.getUsername() != null) {
+            userToUpdate.setUsername(updatedUser.getUsername());
+        }
+        if (updatedUser.getPassword() != null) {
+            userToUpdate.setPassword(updatedUser.getPassword());
         }
         if (updatedUser.getName() != null) {
             userToUpdate.setName(updatedUser.getName());
+        }
+        if (updatedUser.getLastName() != null) {
+            userToUpdate.setLastName(updatedUser.getLastName());
         }
         if (updatedUser.getEmail() != null) {
             userToUpdate.setEmail(updatedUser.getEmail());

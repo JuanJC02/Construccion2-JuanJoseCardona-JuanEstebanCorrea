@@ -1,22 +1,17 @@
 package app.domain.model;
 
+import java.time.LocalDate;
+
 public class Bill {
 
     private String patientName;
+    private String patientLastName;
     private int patientAge;
     private Long patientDocument;
-    private User treatingPhysicianName;
-    private String endDate;
-    private Appointment appointment;
-    private Insurance insurance;
-
-    public User getTreatingPhysicianName() {
-        return treatingPhysicianName;
-    }
-
-    public void setTreatingPhysicianName(User treatingPhysicianName) {
-        this.treatingPhysicianName = treatingPhysicianName;
-    }
+    private Long treatingPhysicianDocument;
+    private String companyName;
+    private Long policyNumber;
+    private LocalDate policyExpirationDate;
 
     public String getPatientName() {
         return patientName;
@@ -24,6 +19,14 @@ public class Bill {
 
     public void setPatientName(String patientName) {
         this.patientName = patientName;
+    }
+
+    public String getPatientLastName() {
+        return patientLastName;
+    }
+
+    public void setPatientLastName(String patientLastName) {
+        this.patientLastName = patientLastName;
     }
 
     public int getPatientAge() {
@@ -42,27 +45,37 @@ public class Bill {
         this.patientDocument = patientDocument;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public Long getTreatingPhysicianDocument() {
+        return treatingPhysicianDocument;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setTreatingPhysicianDocument(Long treatingPhysicianDocument) {
+        this.treatingPhysicianDocument = treatingPhysicianDocument;
     }
 
-    public Appointment getAppointment() {
-        return appointment;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public Insurance getInsurance() {
-        return insurance;
+    public Long getPolicyNumber() {
+        return policyNumber;
     }
 
-    public void setInsurance(Insurance insurance) {
-        this.insurance = insurance;
+    public void setPolicyNumber(Long policyNumber) {
+        this.policyNumber = policyNumber;
     }
+
+    public LocalDate getPolicyExpirationDate() {
+        return policyExpirationDate;
+    }
+
+    public void setPolicyExpirationDate(LocalDate policyExpirationDate) {
+        this.policyExpirationDate = policyExpirationDate;
+    }
+    
+    
 }

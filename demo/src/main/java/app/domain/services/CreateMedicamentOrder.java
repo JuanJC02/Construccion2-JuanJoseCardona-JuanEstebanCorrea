@@ -1,5 +1,6 @@
 package app.domain.services;
 
+import app.domain.Utilities.GenerateRandomId;
 import app.domain.model.MedicamentOrder;
 import app.domain.model.Patient;
 import app.domain.ports.MedicamentOrderPort;
@@ -9,19 +10,15 @@ public class CreateMedicamentOrder {
 
     private MedicamentOrderPort medicamentOrderPort;
     private PatientPort patientPort;
+    private GenerateRandomId generateRandomId;
 
-    public void createMedicamentOrder(Long patientDocument, MedicamentOrder order) throws Exception {
-        if (patientDocument == null || patientDocument.toString().trim().isBlank()) {
-            throw new Exception("no se ha recivido el documento de el paciente");
-        }
-
-        Patient p = patientPort.findByDocument(patientDocument);
+    public void createMedicamentOrder(MedicamentOrder order) throws Exception {
+        Patient p = patientPort.findByDocument(order.getPatientDocument());
         if (p == null) {
-            throw new Exception("paciente no encontrado. Registra el paciente antes de crear la orden de medicamento");
+            throw new Exception("paciente no encontrado con el documento de la orden");
         }
-        
-        if(order.getPatientDocument() == null || order.getPatientDocument().toString().trim().isBlank()) {
-            order.setPatientDocument(patientDocument);
+        if (order.getOrderId() == null || order.getOrderId().toString().trim().isBlank()) {
+            order.setOrderId(generateRandomId.generateRandomId());
         }
 
         medicamentOrderPort.save(order);

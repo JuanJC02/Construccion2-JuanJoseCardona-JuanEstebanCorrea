@@ -7,6 +7,7 @@ public class Patient {
 
     private char gender;
     private LocalDate birthDate;
+    private int age;
     private String username;
     private String password;
     private String name;
@@ -16,15 +17,8 @@ public class Patient {
     private String phonenumber;
     private String address;
     private Role role;
+    private Long policyNumber;
     private EmergencyContact emergencyContact;
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public EmergencyContact getEmergencyContact() {
         return emergencyContact;
@@ -50,6 +44,14 @@ public class Patient {
         this.birthDate = birthDate;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -72,6 +74,14 @@ public class Patient {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Long getDocument() {
@@ -113,5 +123,15 @@ public class Patient {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public Long getPolicyNumber() {
+        return policyNumber;
+    }
+
+    public void setPolicyNumber(Long policyNumber) {
+        this.policyNumber = policyNumber;
+    }
+    
+    
     
 }

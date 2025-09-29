@@ -18,23 +18,21 @@ public class ScheduleAppointment {
         if (appointment == null) {
             throw new Exception("no existen citas para programar");
         }
-        if (appointment.getPatient().getDocument() == null) {
+        if (appointment.getPatientDocument() == null) {
             throw new Exception("la cita debe contener el documento de el paciente");
         }
         if (appointment.getAppointmentDate() != null) {
             throw new Exception("la cita ya esta programada");
         }
 
-        Patient patient = patientPort.findByDocument(appointment.getPatient().getDocument());
+        Patient patient = patientPort.findByDocument(appointment.getPatientDocument());
         if (patient == null) {
-            throw new Exception("paciente no encontrado con el documento: " + appointment.getPatient().getDocument());
+            throw new Exception("paciente no encontrado con el documento: " + appointment.getPatientDocument());
         }
         
         //LocalDateTime randomDateTime = randomDate.generateRandomAppointmentDate();
         appointment.setAppointmentDate(appointmentDate);
         //appointment.setAppointmentId(Math.abs(ThreadLocalRandom.current().nextLong()) * 1000);
-
-        appointment.setPatient(patient);
 
         appointmentPort.save(appointment);
     }

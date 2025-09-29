@@ -4,19 +4,19 @@ package app.domain.model;
 import java.sql.Date;
 
 public class Visit {
-    private Patient patientToVisit;
+    private Long patientToVisitDocument;
     private Date visitDate;
     private Double bloodPressure;
     private Double temperature;
     private Double heartRate;
     private Double bloodOxigenLevel;
 
-    public Patient getPatientToVisit() {
-        return patientToVisit;
+    public Long getPatientToVisitDocument() {
+        return patientToVisitDocument;
     }
 
-    public void setPatientToVisit(Patient patientToVisit) {
-        this.patientToVisit = patientToVisit;
+    public void setPatientToVisitDocument(Long patientToVisitDocument) {
+        this.patientToVisitDocument = patientToVisitDocument;
     }
 
     public Date getVisitDate() {

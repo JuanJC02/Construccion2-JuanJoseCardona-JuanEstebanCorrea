@@ -8,14 +8,14 @@ public class Insurance {
     private Long policyNumber;
     private boolean policyStatus;
     private LocalDate policyExpirationDate;
-    private Patient patient;
+    private Long patientDocument;
 
-    public Patient getPatient() {
-        return patient;
+    public Long getPatientDocument() {
+        return patientDocument;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPatientDocument(Long patientDocument) {
+        this.patientDocument = patientDocument;
     }
 
     public String getCompanyName() {

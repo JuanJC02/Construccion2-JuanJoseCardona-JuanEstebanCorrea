@@ -4,22 +4,23 @@ import app.domain.model.ClinicalHistory;
 import app.domain.model.Patient;
 import app.domain.ports.ClinicalHistoryPort;
 import app.domain.ports.PatientPort;
+import app.domain.ports.UserPort;
 
 public class ClinicalHistoryService {
 
     private ClinicalHistoryPort clinicalHistoryPort;
     private PatientPort patientPort;
+    private UserPort userPort;
 
-    public void createClinicalHistory(Long patientDocument, ClinicalHistory history) throws Exception {
-        if (patientDocument == null) {
-            throw new Exception("documento de paciente es nulo");
-        }
-
-        Patient p = patientPort.findByDocument(patientDocument);
+    public void createClinicalHistory(ClinicalHistory history, Long doctorDocument) throws Exception {
+        Patient p = patientPort.findByDocument(history.getPatientDocument());
         if (p == null) {
-            throw new Exception("paciente no encontrado. Registra el paciente antes de crear la historia clinica");
+            throw new Exception("paciente no encontrado. con el documento del paciente recibido");
         }
-
+        if(userPort.findByDocument(doctorDocument) == null) {
+            throw new Exception("el documento recibido de el doctor es invalido");
+        }
+        history.setDoctorId(doctorDocument);
         clinicalHistoryPort.save(history);
     }
 

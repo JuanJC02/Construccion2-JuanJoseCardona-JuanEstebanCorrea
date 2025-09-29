@@ -2,24 +2,26 @@
 package app.domain.model;
 
 import app.domain.model.enums.Role;
+import java.time.LocalDate;
 
 public class User {   
     private String username;
     private String password;
     private String name;
+    private String lastName;
     private Long document;
     private String email;
     private String phonenumber;
-    private String birthdate;
+    private LocalDate birthdate;
     private String address;
     private Role role;
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String userName) {
-        this.username = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -36,6 +38,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Long getDocument() {
@@ -62,11 +72,11 @@ public class User {
         this.phonenumber = phonenumber;
     }
 
-    public String getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(String birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -85,4 +95,6 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+    
+    
 }

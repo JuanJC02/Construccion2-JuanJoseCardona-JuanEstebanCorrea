@@ -8,20 +8,14 @@ public class RolManager {
 
     private UserPort userPort;
 
-    public void changeRole(Role newRole, User user, User actor) throws Exception {
-        User actor1 = userPort.findByActor(actor);
-        if (actor1 == null) {
-            throw new Exception("actor no encontrado: no se puede cambiar el rol");
-        }
-        if (!actor1.getRole().equals(Role.HUMAN_RESOURCES)) {
-            throw new Exception("el actor no tiene Permisos para modificar los roles");
+    public void changeRole(Role newRole, User user) throws Exception {
+        
+        if (user == null || newRole == null) {
+            throw new Exception("no se puede realizar la accion por falta de datos");
         }
         
-        if (userPort.findByUser(user).getDocument() == null) {
-            throw new Exception("no existe usuario con ese documento");
-        }
-        if (userPort.findByUser(user).getUserName() == null) {
-            throw new Exception("no existe usuario con ese nombre de usuario");
+        if (userPort.findByUser(user).getDocument() == null || userPort.findByUser(user).getUsername() == null) {
+            throw new Exception("no existe usuario igual a el usuario recibido");
         }
         
         user.setRole(newRole);

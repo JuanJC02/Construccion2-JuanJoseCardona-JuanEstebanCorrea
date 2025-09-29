@@ -7,6 +7,15 @@ public class ClinicalHistory {
     private String reasonForConsultation;
     private String symptoms;
     private String diagnosis;
+    private Long patientDocument;
+
+    public Long getPatientDocument() {
+        return patientDocument;
+    }
+
+    public void setPatientDocument(Long patientDocument) {
+        this.patientDocument = patientDocument;
+    }
 
     public String getDate() {
         return date;

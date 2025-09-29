@@ -17,9 +17,9 @@ public class DoctorUseCase {
     
     private final Role rol = DOCTOR;
 
-    public void createClinicalHistory(Long actorDocument, Long patientDocument, ClinicalHistory history) throws Exception {
+    public void createClinicalHistory(Long actorDocument, Long doctorDocument, ClinicalHistory history) throws Exception {
         if(roleValidator.isValidRole(actorDocument, rol)){
-            clinicalHistoryService.createClinicalHistory(patientDocument, history);
+            clinicalHistoryService.createClinicalHistory(history, doctorDocument);
         }
         else{
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
@@ -44,18 +44,18 @@ public class DoctorUseCase {
         }
     }
 
-    public void createMedicamentOrder(Long actorDocument, Long patientDocument, MedicamentOrder order) throws Exception {
+    public void createMedicamentOrder(Long actorDocument, MedicamentOrder order) throws Exception {
         if(roleValidator.isValidRole(actorDocument, rol)) {
-        createMedicamentOrder.createMedicamentOrder(patientDocument, order);
+        createMedicamentOrder.createMedicamentOrder(order);
         }
         else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }
     }
 
-    public void createProcedureOrder(Long actorDocument, Long patientDocument, ProcedureOrder order) throws Exception {
+    public void createProcedureOrder(Long actorDocument, ProcedureOrder order, Long specialtytId) throws Exception {
         if(roleValidator.isValidRole(actorDocument, rol)) {
-            createProcedureOrder.createProcedureOrder(patientDocument, order);
+            createProcedureOrder.createProcedureOrder(order, specialtytId);
         }
         else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");

@@ -5,8 +5,8 @@ import java.sql.Date;
 
 public class Appointment{
     private Date appointmentDate;
-    private Patient patient;
-    private User attendingPhysician;
+    private Long patientDocument;
+    private Long attendingPhysicianDocument;
     private Long appointmentId;
 
     public Long getAppointmentId() {
@@ -17,21 +17,22 @@ public class Appointment{
         this.appointmentId = appointmentId;
     }
 
-    public User getAttendingPhysician() {
-        return attendingPhysician;
+    public Long getAttendingPhysicianDocument() {
+        return attendingPhysicianDocument;
     }
 
-    public void setAttendingPhysician(User attendingPhysician) {
-        this.attendingPhysician = attendingPhysician;
+    public void setAttendingPhysicianDocument(Long attendingPhysicianDocument) {
+        this.attendingPhysicianDocument = attendingPhysicianDocument;
     }
 
-    public Patient getPatient() {
-        return patient;
+    public Long getPatientDocument() {
+        return patientDocument;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPatientDocument(Long patientDocument) {
+        this.patientDocument = patientDocument;
     }
+    
 
     public Date getAppointmentDate() {
         return appointmentDate;

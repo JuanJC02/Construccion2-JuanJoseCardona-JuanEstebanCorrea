@@ -2,7 +2,7 @@
 package app.domain.model;
 
 public class MedicamentOrder {
-    private Long orderNumber;
+    private Long orderId;
     private int itemNumber;
     private String medicamentName;
     private String dose;
@@ -17,12 +17,12 @@ public class MedicamentOrder {
         this.patientDocument = patientDocument;
     }
 
-    public Long getOrderNumber() {
-        return orderNumber;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setOrderNumber(Long orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public int getItemNumber() {

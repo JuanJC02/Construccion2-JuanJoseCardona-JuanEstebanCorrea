@@ -17,9 +17,9 @@ public class AdministrativeStaffUseCase {
 
     private final Role rol = ADMINISTRATIVE_STAFF;
 
-    public void registerBill(Long actorDocument, Bill bill) throws Exception {
+    public void registerBill(Long actorDocument, Bill bill, Long treatingPhysicianDocument) throws Exception {
         if (roleValidator.isValidRole(actorDocument, rol)) {
-            createBill.registerBill(bill);
+            createBill.registerBill(bill, treatingPhysicianDocument);
         } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }
@@ -33,9 +33,9 @@ public class AdministrativeStaffUseCase {
         }
     }
 
-    public void createAppointment(Long actorDocument, Appointment appointment, Long patientDocument, Long attendingPhysicianDocument) throws Exception {
+    public void createAppointment(Long actorDocument, Appointment appointment, Long attendingPhysicianDocument) throws Exception {
         if (roleValidator.isValidRole(actorDocument, rol)) {
-            createAppointment.createAppointment(appointment, patientDocument, attendingPhysicianDocument);
+            createAppointment.createAppointment(appointment, attendingPhysicianDocument);
         } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }
