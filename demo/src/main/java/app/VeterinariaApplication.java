@@ -2,14 +2,17 @@ package app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import app.domain.adapters.input.ConsoleAdapter;
+import app.domain.adapters.input.ConsoleMenu;
 
 @SpringBootApplication
 public class VeterinariaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(VeterinariaApplication.class, args);
-		ConsoleAdapter.showprincipalmenu();
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(VeterinariaApplication.class, args);
+        
+        
+        ConsoleMenu menu = new ConsoleMenu();
+        menu.start();
+    }
 
 }
