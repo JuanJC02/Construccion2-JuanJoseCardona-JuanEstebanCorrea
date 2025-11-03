@@ -23,7 +23,7 @@ public class ConsoleMenu {
         
         int option;
         do {
-            System.out.println("\n---- MNU PRINCIPAL ----");
+            System.out.println("\n---- MENU PRINCIPAL ----");
 
             System.out.println("1. Crear visita");
             System.out.println("2. Crear Cita");
