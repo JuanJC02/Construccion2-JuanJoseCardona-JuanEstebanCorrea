@@ -1,6 +1,6 @@
 package app.domain.services;
 
-import app.domain.Utilities.GenerateRandomId;
+import app.infrastructure.Utilities.GenerateRandomId;
 import app.domain.model.MedicamentOrder;
 import app.domain.model.Patient;
 import app.domain.ports.MedicamentOrderPort;

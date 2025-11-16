@@ -3,7 +3,7 @@ package app.domain.services;
 
 import app.domain.model.User;
 import app.domain.ports.UserPort;
-import app.domain.validators.SimpleValidators;
+import app.adapters.validators.SimpleValidators;
 
 public class CreateUser {
     private UserPort userPort;

@@ -4,7 +4,7 @@ import app.domain.model.*;
 import app.domain.model.enums.Role;
 import static app.domain.model.enums.Role.DOCTOR;
 import app.domain.services.*;
-import app.domain.validators.RoleValidator;
+import app.adapters.validators.RoleValidator;
 
 public class DoctorUseCase {
 

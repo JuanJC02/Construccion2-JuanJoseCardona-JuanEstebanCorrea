@@ -4,7 +4,7 @@ import app.domain.model.*;
 import app.domain.model.enums.Role;
 import static app.domain.model.enums.Role.NURSE;
 import app.domain.services.*;
-import app.domain.validators.RoleValidator;
+import app.adapters.validators.RoleValidator;
 import java.util.List;
 
 public class NurseUseCase {
