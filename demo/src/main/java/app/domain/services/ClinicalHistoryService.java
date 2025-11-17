@@ -5,6 +5,9 @@ import app.domain.model.Patient;
 import app.domain.ports.ClinicalHistoryPort;
 import app.domain.ports.PatientPort;
 import app.domain.ports.UserPort;
+import app.infrastructure.entity.ClinicalHistoryEntity;
+import app.infrastructure.repository.jpa.ClinicalHistoryRepository;
+import app.infrastructure.repository.jpa.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,8 @@ public class ClinicalHistoryService {
     private PatientPort patientPort;
     @Autowired
     private UserPort userPort;
+    @Autowired
+    private ClinicalHistoryRepository repository;
 
     public void createClinicalHistory(ClinicalHistory history) throws Exception {
         Patient p = patientPort.findByDocument(history.getPatientDocument());
@@ -32,12 +37,15 @@ public class ClinicalHistoryService {
         if (history.getPatientDocument() == null) {
             throw new Exception("documento de paciente es nulo");
         }
-
-        Patient p = patientPort.findByDocument(history.getPatientDocument());
-        if (p == null) {
-            throw new Exception("paciente no encontrado. No se puede actualizar historia clinica");
+        ClinicalHistoryEntity entity = repository.findFirstByPatientDocument(history.getPatientDocument());
+        if (entity == null) {
+            throw new Exception("paciente no encontrado. No se puede actualizar historia clínica");
         }
-
-        clinicalHistoryPort.save(history);//pendiente para Update
+        entity.setDate(history.getDate());
+        entity.setDoctorId(history.getDoctorId());
+        entity.setReasonForConsultation(history.getReasonForConsultation());
+        entity.setSymptoms(history.getSymptoms());
+        entity.setDiagnosis(history.getDiagnosis());
+        repository.save(entity);
     }
 }

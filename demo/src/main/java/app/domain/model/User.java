@@ -5,6 +5,7 @@ import app.domain.model.enums.Role;
 import java.time.LocalDate;
 
 public class User {   
+    private Long id;
     private String username;
     private String password;
     private String name;
@@ -15,6 +16,15 @@ public class User {
     private LocalDate birthdate;
     private String address;
     private Role role;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 
     public String getUsername() {
         return username;

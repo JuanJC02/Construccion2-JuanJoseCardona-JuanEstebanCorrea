@@ -1,4 +1,4 @@
-
+// ConsoleAdapter.java (modificado para agregar lógica de búsqueda y actualización)
 package app.adapters.in.input;
 
 import app.domain.model.*;
@@ -7,6 +7,8 @@ import jakarta.annotation.PostConstruct;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import app.infrastructure.entity.PatientEntity;
+import app.infrastructure.repository.jpa.PatientRepository;
 
 @Component
 public class ConsoleAdapter {
@@ -15,51 +17,57 @@ public class ConsoleAdapter {
     private final RegisterVisit registerVisit;
     private final ClinicalHistoryAdapterIn clinicalHAdapter;
     private final ClinicalHistoryService clinicalHService;
+    private final PatientRepository patientRepository;  // Repositorio para buscar pacientes
 
     @Autowired
-    public ConsoleAdapter(VisitInputAdapter visitAdapter, RegisterVisit registerVisit, ClinicalHistoryAdapterIn clinicalHAdapter, ClinicalHistoryService clinicalHService) {
+    public ConsoleAdapter(VisitInputAdapter visitAdapter,
+                          RegisterVisit registerVisit,
+                          ClinicalHistoryAdapterIn clinicalHAdapter,
+                          ClinicalHistoryService clinicalHService,
+                          PatientRepository patientRepository) {
+        
+        
+        
         this.visitAdapter = visitAdapter;
         this.registerVisit = registerVisit;
         this.clinicalHAdapter = clinicalHAdapter;
         this.clinicalHService = clinicalHService;
+        this.patientRepository = patientRepository;
     }
 
     @PostConstruct
     public void start() throws Exception {
-        showprincipalmenu();
+        showPrincipalMenu();
     }
-    
-    public void showprincipalmenu() throws Exception {
-        Scanner sc = new Scanner(System.in);
-        int opcion;
 
+    public void showPrincipalMenu() {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
         do {
             System.out.println("\n=== MENÚ PRINCIPAL ===");
-            System.out.println("1. Menú Administrativo");
-            System.out.println("2. Menú Doctor");
-            System.out.println("3. Menú Recursos Humanos");
-            System.out.println("4. Menú Enfermería");
-            System.out.println("0. Salir");
+            System.out.println("1. Administrativo");
+            System.out.println("2. Doctor");
+            System.out.println("3. Recursos Humanos");
+            System.out.println("4. Enfermería");
+            System.out.println("0. Salir del sistema");
             System.out.print("Seleccione una opción: ");
-            opcion = sc.nextInt();
+            opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1 -> showadministrativemenu();
-                case 2 -> showdoctormenu();
-                case 3 -> showhumanresourcesmenu();
-                case 4 -> shownursemenu();
+                case 1 -> showAdministrativoMenu();
+                case 2 -> showDoctorMenu();
+                case 3 -> showHumanResourcesMenu();
+                case 4 -> showNurseMenu();
                 case 0 -> System.out.println("Saliendo del sistema");
                 default -> System.out.println("Opción inválida.");
             }
         } while (opcion != 0);
-
-        sc.close();
+        scanner.close();
     }
 
-    public void showadministrativemenu() {
+    public void showAdministrativoMenu() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
-
         do {
             System.out.println("\n=== MENÚ ADMINISTRATIVO ===");
             System.out.println("1. Registrar factura");
@@ -71,20 +79,19 @@ public class ConsoleAdapter {
             opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1 -> System.out.println("Registrar factura");
-                case 2 -> System.out.println("Programar cita");
-                case 3 -> System.out.println("Crear cita");
-                case 4 -> System.out.println("Crear paciente");
+                case 1 -> System.out.println("Registrar factura (servicio no implementado).");
+                case 2 -> System.out.println("Programar cita (servicio no implementado).");
+                case 3 -> System.out.println("Crear cita (servicio no implementado).");
+                case 4 -> System.out.println("Crear paciente (servicio no implementado).");
                 case 0 -> System.out.println("Volviendo...");
                 default -> System.out.println("Opción inválida.");
             }
         } while (opcion != 0);
     }
 
-    public void showdoctormenu() throws Exception {
+    public void showDoctorMenu() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
-
         do {
             System.out.println("\n=== MENÚ DOCTOR ===");
             System.out.println("1. Crear historia clínica");
@@ -98,34 +105,58 @@ public class ConsoleAdapter {
             opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1: 
-                    ClinicalHistory ch = clinicalHAdapter.buildHistoryFromConsole();
-                    clinicalHService.createClinicalHistory(ch);
+                case 1:
+                    ClinicalHistory nueva = clinicalHAdapter.buildHistoryFromConsole();
+                    try {
+                        clinicalHService.createClinicalHistory(nueva);
+                        System.out.println("Historia clínica creada correctamente.");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
                 case 2:
-                    ClinicalHistory chup = clinicalHAdapter.buildHistoryFromConsole();
-                    clinicalHService.updateClinicalHistory(chup);
+                    ClinicalHistory actual = clinicalHAdapter.buildHistoryFromConsole();
+                    try {
+                        clinicalHService.updateClinicalHistory(actual);
+                        System.out.println("Historia clínica actualizada correctamente.");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
                 case 3:
-                    System.out.println("Crear orden de ayuda diagnóstica");
+                    System.out.println("Crear orden de ayuda diagnóstica (servicio no implementado).");
+                    break;
                 case 4:
-                    System.out.println("Crear orden de medicamento");
+                    System.out.println("Crear orden de medicamento (servicio no implementado).");
+                    break;
                 case 5:
-                    System.out.println("Crear orden de procedimiento");
+                    System.out.println("Crear orden de procedimiento (servicio no implementado).");
+                    break;
                 case 6:
-                    System.out.println("Buscar paciente");
+                    System.out.print("Ingrese el documento del paciente a buscar: ");
+                    Long doc = scanner.nextLong();
+                    // Buscar paciente en BD
+                    PatientEntity paciente = patientRepository.findByDocument(doc).orElse(null);
+                    if (paciente != null) {
+                        System.out.println("Paciente encontrado: " 
+                            + paciente.getName() + " " + paciente.getLastName());
+                    } else {
+                        System.out.println("Paciente no encontrado.");
+                    }
+                    break;
                 case 0:
                     System.out.println("Volviendo...");
+                    break;
                 default:
                     System.out.println("Opción inválida.");
+                    break;
             }
         } while (opcion != 0);
     }
 
-    public void showhumanresourcesmenu() {
+    public void showHumanResourcesMenu() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
-
         do {
             System.out.println("\n=== MENÚ RECURSOS HUMANOS ===");
             System.out.println("1. Crear usuario Recursos Humanos");
@@ -141,20 +172,21 @@ public class ConsoleAdapter {
             opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1 -> System.out.println("Crear usuario Recursos Humanos");
-                case 2 -> System.out.println("Crear usuario Administrativo");
-                case 3 -> System.out.println("Crear usuario Soporte de Información");
-                case 4 -> System.out.println("Crear usuario Enfermería");
-                case 5 -> System.out.println("Crear usuario Doctor");
-                case 6 -> System.out.println("Eliminar usuario");
-                case 7 -> System.out.println("Cambiar rol de usuario");
-                case 8 -> System.out.println("Actualizar usuario");
+                case 1 -> System.out.println("Crear usuario Recursos Humanos (servicio no implementado).");
+                case 2 -> System.out.println("Crear usuario Administrativo (servicio no implementado).");
+                case 3 -> System.out.println("Crear usuario Soporte de Información (servicio no implementado).");
+                case 4 -> System.out.println("Crear usuario Enfermería (servicio no implementado).");
+                case 5 -> System.out.println("Crear usuario Doctor (servicio no implementado).");
+                case 6 -> System.out.println("Eliminar usuario (servicio no implementado).");
+                case 7 -> System.out.println("Cambiar rol de usuario (servicio no implementado).");
+                case 8 -> System.out.println("Actualizar usuario (servicio no implementado).");
                 case 0 -> System.out.println("Volviendo...");
                 default -> System.out.println("Opción inválida.");
             }
         } while (opcion != 0);
     }
-    public void shownursemenu() throws Exception{
+
+    public void showNurseMenu() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
         do {
@@ -168,20 +200,34 @@ public class ConsoleAdapter {
 
             switch (opcion) {
                 case 1:
-                    Visit NewVisit = visitAdapter.BuildVisitFromConsole();
-                    registerVisit.registerVisit(NewVisit);
+                    Visit nuevaVisita = visitAdapter.BuildVisitFromConsole();
+                    try {
+                        registerVisit.registerVisit(nuevaVisita);
+                        System.out.println("Visita registrada correctamente.");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
                 case 2:
-                    System.out.println("Buscar paciente");
+                    System.out.print("Ingrese el documento del paciente a buscar: ");
+                    Long doc2 = scanner.nextLong();
+                    // Buscar paciente en BD
+                    PatientEntity paciente2 = patientRepository.findByDocument(doc2).orElse(null);
+                    if (paciente2 != null) {
+                        System.out.println("Paciente encontrado: " 
+                            + paciente2.getName() + " " + paciente2.getLastName());
+                    } else {
+                        System.out.println("Paciente no encontrado.");
+                    }
                     break;
                 case 3:
-                    System.out.println("Consultar órdenes");
+                    System.out.println("Consultar órdenes (servicio no implementado).");
                     break;
                 case 0:
                     System.out.println("Volviendo...");
                     break;
                 default:
-                    System.out.println("pción inválida.");
+                    System.out.println("Opción inválida.");
                     break;
             }
         } while (opcion != 0);

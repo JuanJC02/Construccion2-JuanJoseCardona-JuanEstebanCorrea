@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClinicalHistoryRepository extends JpaRepository<ClinicalHistoryEntity, Long> {
+    ClinicalHistoryEntity findFirstByPatientDocument(Long patientDocument);
 }

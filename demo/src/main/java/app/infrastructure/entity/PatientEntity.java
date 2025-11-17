@@ -22,6 +22,8 @@ public class PatientEntity {
     private String lastName;
 
     private Long document;
+    
+    private int age;
 
     private String email;
     private String phonenumber;
@@ -40,6 +42,14 @@ public class PatientEntity {
     }
 
     // ------- GETTERS AND SETTERS ---------
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public Long getId() {
         return id;
