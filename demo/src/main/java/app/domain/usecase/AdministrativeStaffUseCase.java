@@ -33,9 +33,9 @@ public class AdministrativeStaffUseCase {
         }
     }
 
-    public void createAppointment(Long actorDocument, Appointment appointment, Long attendingPhysicianDocument) throws Exception {
+    public void createAppointment(Long actorDocument, Appointment appointment) throws Exception {
         if (roleValidator.isValidRole(actorDocument, rol)) {
-            createAppointment.createAppointment(appointment, attendingPhysicianDocument);
+            createAppointment.createAppointment(appointment);
         } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }

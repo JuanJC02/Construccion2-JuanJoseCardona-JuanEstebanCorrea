@@ -8,7 +8,7 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import app.infrastructure.entity.PatientEntity;
-import app.infrastructure.repository.jpa.PatientRepository;
+import app.infrastructure.repository.jpa.*;
 
 @Component
 public class ConsoleAdapter {
@@ -17,22 +17,29 @@ public class ConsoleAdapter {
     private final RegisterVisit registerVisit;
     private final ClinicalHistoryAdapterIn clinicalHAdapter;
     private final ClinicalHistoryService clinicalHService;
-    private final PatientRepository patientRepository;  // Repositorio para buscar pacientes
+    private final PatientRepository patientRepository;
+    private final UserRepository userRepository;
+    private final AppointmentInputAdapter apAdapter;
+    private final CreateAppointment createAppointment;
 
     @Autowired
     public ConsoleAdapter(VisitInputAdapter visitAdapter,
-                          RegisterVisit registerVisit,
-                          ClinicalHistoryAdapterIn clinicalHAdapter,
-                          ClinicalHistoryService clinicalHService,
-                          PatientRepository patientRepository) {
-        
-        
-        
+            RegisterVisit registerVisit,
+            ClinicalHistoryAdapterIn clinicalHAdapter,
+            ClinicalHistoryService clinicalHService,
+            PatientRepository patientRepository,
+            UserRepository userRepository,
+            AppointmentInputAdapter apAdapter,
+            CreateAppointment createAppointment) {
+
         this.visitAdapter = visitAdapter;
         this.registerVisit = registerVisit;
         this.clinicalHAdapter = clinicalHAdapter;
         this.clinicalHService = clinicalHService;
         this.patientRepository = patientRepository;
+        this.userRepository = userRepository;
+        this.apAdapter = apAdapter;
+        this.createAppointment = createAppointment;
     }
 
     @PostConstruct
@@ -54,12 +61,18 @@ public class ConsoleAdapter {
             opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1 -> showAdministrativoMenu();
-                case 2 -> showDoctorMenu();
-                case 3 -> showHumanResourcesMenu();
-                case 4 -> showNurseMenu();
-                case 0 -> System.out.println("Saliendo del sistema");
-                default -> System.out.println("Opción inválida.");
+                case 1 ->
+                    showAdministrativoMenu();
+                case 2 ->
+                    showDoctorMenu();
+                case 3 ->
+                    showHumanResourcesMenu();
+                case 4 ->
+                    showNurseMenu();
+                case 0 ->
+                    System.out.println("Saliendo del sistema");
+                default ->
+                    System.out.println("Opción inválida.");
             }
         } while (opcion != 0);
         scanner.close();
@@ -79,12 +92,31 @@ public class ConsoleAdapter {
             opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1 -> System.out.println("Registrar factura (servicio no implementado).");
-                case 2 -> System.out.println("Programar cita (servicio no implementado).");
-                case 3 -> System.out.println("Crear cita (servicio no implementado).");
-                case 4 -> System.out.println("Crear paciente (servicio no implementado).");
-                case 0 -> System.out.println("Volviendo...");
-                default -> System.out.println("Opción inválida.");
+                case 1:
+                    System.out.println("Registrar factura (servicio no implementado).");
+                    break;
+                case 2:
+                    System.out.println("Programar cita (servicio no implementado).");
+                    break;
+                case 3:
+                    Appointment nuevo = apAdapter.buildAppointmentFromConsole();
+                    try {
+                        createAppointment.createAppointment(nuevo);
+                        System.out.println("Cita creada correctamente.");
+                        System.out.println("Ahora tienes que programarla.");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                    break;
+                case 4:
+                    System.out.println("Crear paciente (servicio no implementado).");
+                    break;
+                case 0:
+                    System.out.println("Volviendo...");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+                    break;
             }
         } while (opcion != 0);
     }
@@ -135,11 +167,10 @@ public class ConsoleAdapter {
                 case 6:
                     System.out.print("Ingrese el documento del paciente a buscar: ");
                     Long doc = scanner.nextLong();
-                    // Buscar paciente en BD
                     PatientEntity paciente = patientRepository.findByDocument(doc).orElse(null);
                     if (paciente != null) {
-                        System.out.println("Paciente encontrado: " 
-                            + paciente.getName() + " " + paciente.getLastName());
+                        System.out.println("Paciente encontrado: "
+                                + paciente.getName() + " " + paciente.getLastName());
                     } else {
                         System.out.println("Paciente no encontrado.");
                     }
@@ -172,16 +203,26 @@ public class ConsoleAdapter {
             opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1 -> System.out.println("Crear usuario Recursos Humanos (servicio no implementado).");
-                case 2 -> System.out.println("Crear usuario Administrativo (servicio no implementado).");
-                case 3 -> System.out.println("Crear usuario Soporte de Información (servicio no implementado).");
-                case 4 -> System.out.println("Crear usuario Enfermería (servicio no implementado).");
-                case 5 -> System.out.println("Crear usuario Doctor (servicio no implementado).");
-                case 6 -> System.out.println("Eliminar usuario (servicio no implementado).");
-                case 7 -> System.out.println("Cambiar rol de usuario (servicio no implementado).");
-                case 8 -> System.out.println("Actualizar usuario (servicio no implementado).");
-                case 0 -> System.out.println("Volviendo...");
-                default -> System.out.println("Opción inválida.");
+                case 1 ->
+                    System.out.println("Crear usuario Recursos Humanos (servicio no implementado).");
+                case 2 ->
+                    System.out.println("Crear usuario Administrativo (servicio no implementado).");
+                case 3 ->
+                    System.out.println("Crear usuario Soporte de Información (servicio no implementado).");
+                case 4 ->
+                    System.out.println("Crear usuario Enfermería (servicio no implementado).");
+                case 5 ->
+                    System.out.println("Crear usuario Doctor (servicio no implementado).");
+                case 6 ->
+                    System.out.println("Eliminar usuario (servicio no implementado).");
+                case 7 ->
+                    System.out.println("Cambiar rol de usuario (servicio no implementado).");
+                case 8 ->
+                    System.out.println("Actualizar usuario (servicio no implementado).");
+                case 0 ->
+                    System.out.println("Volviendo...");
+                default ->
+                    System.out.println("Opción inválida.");
             }
         } while (opcion != 0);
     }
@@ -214,8 +255,8 @@ public class ConsoleAdapter {
                     // Buscar paciente en BD
                     PatientEntity paciente2 = patientRepository.findByDocument(doc2).orElse(null);
                     if (paciente2 != null) {
-                        System.out.println("Paciente encontrado: " 
-                            + paciente2.getName() + " " + paciente2.getLastName());
+                        System.out.println("Paciente encontrado: "
+                                + paciente2.getName() + " " + paciente2.getLastName());
                     } else {
                         System.out.println("Paciente no encontrado.");
                     }
