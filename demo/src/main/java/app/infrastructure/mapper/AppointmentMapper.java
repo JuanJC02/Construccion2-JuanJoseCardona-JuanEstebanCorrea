@@ -2,7 +2,9 @@ package app.infrastructure.mapper;
 
 import app.domain.model.Appointment;
 import app.infrastructure.entity.AppointmentEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AppointmentMapper {
 
     public AppointmentEntity toEntity(Appointment appointment) {

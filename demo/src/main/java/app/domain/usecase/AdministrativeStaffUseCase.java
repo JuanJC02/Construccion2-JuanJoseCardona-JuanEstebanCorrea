@@ -17,9 +17,9 @@ public class AdministrativeStaffUseCase {
 
     private final Role rol = ADMINISTRATIVE_STAFF;
 
-    public void registerBill(Long actorDocument, Bill bill, Long treatingPhysicianDocument) throws Exception {
+    public void registerBill(Long actorDocument, Bill bill) throws Exception {
         if (roleValidator.isValidRole(actorDocument, rol)) {
-            createBill.registerBill(bill, treatingPhysicianDocument);
+            createBill.registerBill(bill);
         } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }

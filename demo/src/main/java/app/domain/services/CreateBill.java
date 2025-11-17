@@ -8,17 +8,23 @@ import app.domain.ports.BillPort;
 import app.domain.ports.InsurancePort;
 import app.domain.ports.PatientPort;
 import app.domain.ports.UserPort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CreateBill {
-
+    
+    @Autowired
     private BillPort billPort;
+    @Autowired
     private PatientPort patientPort;
+    @Autowired
     private InsurancePort insurancePort;
+    @Autowired
     private UserPort userPort;
 
-    public void registerBill(Bill bill, Long treatingPhysicianDocument) throws Exception {
-        //builder minimo patientDocument, treatingPhysicianDocument 
-        if (treatingPhysicianDocument == null || treatingPhysicianDocument.toString().trim().isBlank()) {
+    public void registerBill(Bill bill) throws Exception { 
+        if (bill.getTreatingPhysicianDocument()== null || bill.getTreatingPhysicianDocument().toString().trim().isBlank()) {
             throw new Exception("No se ha recibido el documento de el medico tratante");
         }
         if (bill == null) {
@@ -30,15 +36,11 @@ public class CreateBill {
             throw new Exception("no se ha encontrado un paciente con el documento recibido de la factura");
         }
 
-        if (bill.getTreatingPhysicianDocument() == null || bill.getTreatingPhysicianDocument().toString().trim().isBlank()) {
-            bill.setTreatingPhysicianDocument(treatingPhysicianDocument);
-        }
-
-        if (userPort.findDoctorByDocument(treatingPhysicianDocument) == null) {
+        if (userPort.findDoctorByDocument(bill.getTreatingPhysicianDocument()) == null) {
             throw new Exception("no se ha encontrado un usuario con el documento del medico tratante");
         }
 
-        if (!userPort.findDoctorByDocument(treatingPhysicianDocument).getRole().equals(Role.DOCTOR)) {
+        if (!userPort.findDoctorByDocument(bill.getTreatingPhysicianDocument()).getRole().equals(Role.DOCTOR)) {
             throw new Exception("el medico tratante no cumple con el rol necesario");
         }
 

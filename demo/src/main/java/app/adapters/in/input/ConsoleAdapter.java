@@ -1,6 +1,7 @@
 // ConsoleAdapter.java (modificado para agregar lógica de búsqueda y actualización)
 package app.adapters.in.input;
 
+import app.adapter.out.BillAdapter;
 import app.domain.model.*;
 import app.domain.services.*;
 import jakarta.annotation.PostConstruct;
@@ -21,6 +22,8 @@ public class ConsoleAdapter {
     private final UserRepository userRepository;
     private final AppointmentInputAdapter apAdapter;
     private final CreateAppointment createAppointment;
+    private final BillInputAdapter billInputAdapter;
+    private final CreateBill createBill;
 
     @Autowired
     public ConsoleAdapter(VisitInputAdapter visitAdapter,
@@ -30,7 +33,9 @@ public class ConsoleAdapter {
             PatientRepository patientRepository,
             UserRepository userRepository,
             AppointmentInputAdapter apAdapter,
-            CreateAppointment createAppointment) {
+            CreateAppointment createAppointment,
+            BillInputAdapter billInputAdapter,
+            CreateBill createBill) {
 
         this.visitAdapter = visitAdapter;
         this.registerVisit = registerVisit;
@@ -40,6 +45,8 @@ public class ConsoleAdapter {
         this.userRepository = userRepository;
         this.apAdapter = apAdapter;
         this.createAppointment = createAppointment;
+        this.billInputAdapter = billInputAdapter;
+        this.createBill = createBill;
     }
 
     @PostConstruct
@@ -47,7 +54,7 @@ public class ConsoleAdapter {
         showPrincipalMenu();
     }
 
-    public void showPrincipalMenu() {
+    public void showPrincipalMenu() throws Exception {
         Scanner scanner = new Scanner(System.in);
         int opcion;
         do {
@@ -78,7 +85,7 @@ public class ConsoleAdapter {
         scanner.close();
     }
 
-    public void showAdministrativoMenu() {
+    public void showAdministrativoMenu() throws Exception {
         Scanner scanner = new Scanner(System.in);
         int opcion;
         do {
@@ -93,7 +100,13 @@ public class ConsoleAdapter {
 
             switch (opcion) {
                 case 1:
-                    System.out.println("Registrar factura (servicio no implementado).");
+                    Bill bill = billInputAdapter.buildBillFromConsole();
+                    try {
+                        createBill.registerBill(bill);
+                        System.out.println("Factura creada correctamente.");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
                 case 2:
                     System.out.println("Programar cita (servicio no implementado).");
