@@ -10,33 +10,34 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ClinicalHistoryService {
-            
+    @Autowired
     private ClinicalHistoryPort clinicalHistoryPort;
+    @Autowired
     private PatientPort patientPort;
+    @Autowired
     private UserPort userPort;
 
-    public void createClinicalHistory(ClinicalHistory history, Long doctorDocument) throws Exception {
+    public void createClinicalHistory(ClinicalHistory history) throws Exception {
         Patient p = patientPort.findByDocument(history.getPatientDocument());
         if (p == null) {
             throw new Exception("paciente no encontrado. con el documento del paciente recibido");
         }
-        if(userPort.findByDocument(doctorDocument) == null) {
-            throw new Exception("el documento recibido de el doctor es invalido");
+        if(userPort.findByDocument(history.getDoctorId()) == null) {
+            throw new Exception("no existe un doctor con ese documento");
         }
-        history.setDoctorId(doctorDocument);
         clinicalHistoryPort.save(history);
     }
 
-    public void updateClinicalHistory(Long patientDocument, ClinicalHistory history) throws Exception {
-        if (patientDocument == null) {
+    public void updateClinicalHistory(ClinicalHistory history) throws Exception {
+        if (history.getPatientDocument() == null) {
             throw new Exception("documento de paciente es nulo");
         }
 
-        Patient p = patientPort.findByDocument(patientDocument);
+        Patient p = patientPort.findByDocument(history.getPatientDocument());
         if (p == null) {
             throw new Exception("paciente no encontrado. No se puede actualizar historia clinica");
         }
 
-        clinicalHistoryPort.update(history);
+        clinicalHistoryPort.save(history);//pendiente para Update
     }
 }

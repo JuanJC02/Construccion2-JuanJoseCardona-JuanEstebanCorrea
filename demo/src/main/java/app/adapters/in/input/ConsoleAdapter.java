@@ -13,11 +13,15 @@ public class ConsoleAdapter {
 
     private final VisitInputAdapter visitAdapter;
     private final RegisterVisit registerVisit;
+    private final ClinicalHistoryAdapterIn clinicalHAdapter;
+    private final ClinicalHistoryService clinicalHService;
 
     @Autowired
-    public ConsoleAdapter(VisitInputAdapter visitAdapter, RegisterVisit registerVisit) {
+    public ConsoleAdapter(VisitInputAdapter visitAdapter, RegisterVisit registerVisit, ClinicalHistoryAdapterIn clinicalHAdapter, ClinicalHistoryService clinicalHService) {
         this.visitAdapter = visitAdapter;
         this.registerVisit = registerVisit;
+        this.clinicalHAdapter = clinicalHAdapter;
+        this.clinicalHService = clinicalHService;
     }
 
     @PostConstruct
@@ -77,7 +81,7 @@ public class ConsoleAdapter {
         } while (opcion != 0);
     }
 
-    public void showdoctormenu() {
+    public void showdoctormenu() throws Exception {
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -94,14 +98,26 @@ public class ConsoleAdapter {
             opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1 -> System.out.println("Crear historia clínica");
-                case 2 -> System.out.println("Actualizar historia clínica");
-                case 3 -> System.out.println("Crear orden de ayuda diagnóstica");
-                case 4 -> System.out.println("Crear orden de medicamento");
-                case 5 -> System.out.println("Crear orden de procedimiento");
-                case 6 -> System.out.println("Buscar paciente");
-                case 0 -> System.out.println("Volviendo...");
-                default -> System.out.println("Opción inválida.");
+                case 1: 
+                    ClinicalHistory ch = clinicalHAdapter.buildHistoryFromConsole();
+                    clinicalHService.createClinicalHistory(ch);
+                    break;
+                case 2:
+                    ClinicalHistory chup = clinicalHAdapter.buildHistoryFromConsole();
+                    clinicalHService.updateClinicalHistory(chup);
+                    break;
+                case 3:
+                    System.out.println("Crear orden de ayuda diagnóstica");
+                case 4:
+                    System.out.println("Crear orden de medicamento");
+                case 5:
+                    System.out.println("Crear orden de procedimiento");
+                case 6:
+                    System.out.println("Buscar paciente");
+                case 0:
+                    System.out.println("Volviendo...");
+                default:
+                    System.out.println("Opción inválida.");
             }
         } while (opcion != 0);
     }

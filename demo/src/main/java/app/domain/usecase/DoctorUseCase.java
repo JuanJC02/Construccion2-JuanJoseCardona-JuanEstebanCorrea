@@ -17,18 +17,18 @@ public class DoctorUseCase {
     
     private final Role rol = DOCTOR;
 
-    public void createClinicalHistory(Long actorDocument, Long doctorDocument, ClinicalHistory history) throws Exception {
+    public void createClinicalHistory(Long actorDocument, ClinicalHistory history) throws Exception {
         if(roleValidator.isValidRole(actorDocument, rol)){
-            clinicalHistoryService.createClinicalHistory(history, doctorDocument);
+            clinicalHistoryService.createClinicalHistory(history);
         }
         else{
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }
     }
 
-    public void updateClinicalHistory(Long actorDocument, Long patientDocument, ClinicalHistory history) throws Exception {
+    public void updateClinicalHistory(Long actorDocument, ClinicalHistory history) throws Exception {
         if(roleValidator.isValidRole(actorDocument, rol)){
-            clinicalHistoryService.updateClinicalHistory(patientDocument, history);
+            clinicalHistoryService.updateClinicalHistory(history);
         }
         else{
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
