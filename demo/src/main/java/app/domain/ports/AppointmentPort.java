@@ -2,6 +2,7 @@
 package app.domain.ports;
 
 import app.domain.model.Appointment;
+import app.infrastructure.entity.AppointmentEntity;
 import java.util.List;
 
 public interface AppointmentPort {
@@ -9,4 +10,5 @@ public interface AppointmentPort {
     public Appointment findAppointmentByDocument(Long document) throws Exception;
     public Long findAppointmentIdById(Long appointmentID) throws Exception;
     public void save(Appointment appointment) throws Exception;
+    AppointmentEntity save(AppointmentEntity appointment) throws Exception;
 }

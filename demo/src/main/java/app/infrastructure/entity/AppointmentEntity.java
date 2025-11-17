@@ -5,21 +5,18 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "appointments")
-public class AppoointmentEntity {
+public class AppointmentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointmentId;
-
-    private Date appointmentDate;
-
     
+    private Date appointmentDate;
     private Long patientDocument;
-
     private Long attendingPhysicianDocument;
 
-    public AppoointmentEntity() {}
-
+    public AppointmentEntity() {}
+    
     public Long getAppointmentId() {
         return appointmentId;
     }

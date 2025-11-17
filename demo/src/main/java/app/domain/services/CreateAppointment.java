@@ -7,7 +7,9 @@ import app.domain.model.User;
 import app.domain.ports.AppointmentPort;
 import app.domain.ports.PatientPort;
 import app.domain.ports.UserPort;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CreateAppointment {
 
     private UserPort userPort;
@@ -49,4 +51,5 @@ public class CreateAppointment {
 
         appointmentPort.save(ap);
     }
+    
 }

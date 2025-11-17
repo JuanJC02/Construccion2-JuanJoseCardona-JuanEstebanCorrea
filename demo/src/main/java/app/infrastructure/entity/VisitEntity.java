@@ -30,6 +30,7 @@ public class VisitEntity {
     @Column
     private Double bloodOxigenLevel;
 
+
     public Long getId() {
         return id;
     }

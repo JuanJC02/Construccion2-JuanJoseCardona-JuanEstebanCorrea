@@ -1,18 +1,19 @@
 package app;
 
+import app.adapters.in.input.ConsoleAdapter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import app.adapters.in.input.ConsoleMenu;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class VeterinariaApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(VeterinariaApplication.class, args);
+    public static void main(String[] args) throws Exception {
+        ApplicationContext ctx = SpringApplication.run(VeterinariaApplication.class, args);
         
         
-        ConsoleMenu menu = new ConsoleMenu();
-        menu.start();
+        ConsoleAdapter console = ctx.getBean(ConsoleAdapter.class);
+        console.start();
     }
 
 }

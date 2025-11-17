@@ -5,9 +5,12 @@ import app.domain.model.Patient;
 import app.domain.ports.ClinicalHistoryPort;
 import app.domain.ports.PatientPort;
 import app.domain.ports.UserPort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ClinicalHistoryService {
-
+            
     private ClinicalHistoryPort clinicalHistoryPort;
     private PatientPort patientPort;
     private UserPort userPort;

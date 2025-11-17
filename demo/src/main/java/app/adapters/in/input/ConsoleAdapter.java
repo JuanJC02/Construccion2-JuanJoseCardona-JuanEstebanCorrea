@@ -1,15 +1,32 @@
+
 package app.adapters.in.input;
 
+import app.domain.model.*;
+import app.domain.services.*;
+import jakarta.annotation.PostConstruct;
 import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ConsoleAdapter {
 
-    public static void main(String[] args) {
-        showprincipalmenu();
+    private final VisitInputAdapter visitAdapter;
+    private final RegisterVisit registerVisit;
+
+    @Autowired
+    public ConsoleAdapter(VisitInputAdapter visitAdapter, RegisterVisit registerVisit) {
+        this.visitAdapter = visitAdapter;
+        this.registerVisit = registerVisit;
     }
 
-    public static void showprincipalmenu() {
-        Scanner scanner = new Scanner(System.in);
+    @PostConstruct
+    public void start() throws Exception {
+        showprincipalmenu();
+    }
+    
+    public void showprincipalmenu() throws Exception {
+        Scanner sc = new Scanner(System.in);
         int opcion;
 
         do {
@@ -20,7 +37,7 @@ public class ConsoleAdapter {
             System.out.println("4. Menú Enfermería");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
-            opcion = scanner.nextInt();
+            opcion = sc.nextInt();
 
             switch (opcion) {
                 case 1 -> showadministrativemenu();
@@ -32,10 +49,10 @@ public class ConsoleAdapter {
             }
         } while (opcion != 0);
 
-        scanner.close();
+        sc.close();
     }
 
-    public static void showadministrativemenu() {
+    public void showadministrativemenu() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -60,7 +77,7 @@ public class ConsoleAdapter {
         } while (opcion != 0);
     }
 
-    public static void showdoctormenu() {
+    public void showdoctormenu() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -89,7 +106,7 @@ public class ConsoleAdapter {
         } while (opcion != 0);
     }
 
-    public static void showhumanresourcesmenu() {
+    public void showhumanresourcesmenu() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -121,11 +138,9 @@ public class ConsoleAdapter {
             }
         } while (opcion != 0);
     }
-
-    public static void shownursemenu() {
+    public void shownursemenu() throws Exception{
         Scanner scanner = new Scanner(System.in);
         int opcion;
-
         do {
             System.out.println("\n=== MENÚ ENFERMERÍA ===");
             System.out.println("1. Registrar visita");
@@ -136,11 +151,22 @@ public class ConsoleAdapter {
             opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1 -> System.out.println("Registrar visita");
-                case 2 -> System.out.println("Buscar paciente");
-                case 3 -> System.out.println("Consultar órdenes");
-                case 0 -> System.out.println("Volviendo...");
-                default -> System.out.println("pción inválida.");
+                case 1:
+                    Visit NewVisit = visitAdapter.BuildVisitFromConsole();
+                    registerVisit.registerVisit(NewVisit);
+                    break;
+                case 2:
+                    System.out.println("Buscar paciente");
+                    break;
+                case 3:
+                    System.out.println("Consultar órdenes");
+                    break;
+                case 0:
+                    System.out.println("Volviendo...");
+                    break;
+                default:
+                    System.out.println("pción inválida.");
+                    break;
             }
         } while (opcion != 0);
     }

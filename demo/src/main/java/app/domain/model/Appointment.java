@@ -4,10 +4,10 @@ package app.domain.model;
 import java.sql.Date;
 
 public class Appointment{
+    private Long appointmentId;
     private Date appointmentDate;
     private Long patientDocument;
     private Long attendingPhysicianDocument;
-    private Long appointmentId;
 
     public Long getAppointmentId() {
         return appointmentId;
