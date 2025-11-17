@@ -8,9 +8,6 @@ public class DiagnosticHelpOrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
     private Long orderNumber;
 
     @Column(nullable = false)
@@ -30,15 +27,18 @@ public class DiagnosticHelpOrderEntity {
 
     @Column(nullable = false)
     private Long specialtyId;
+    
+    @Column(nullable = false)
+    private Long patientDocument;
 
     public DiagnosticHelpOrderEntity() {}
 
-    public Long getId() {
-        return id;
+    public Long getPatientDocument() {
+        return patientDocument;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPatientDocument(Long PatientDocument) {
+        this.patientDocument = PatientDocument;
     }
 
     public Long getOrderNumber() {

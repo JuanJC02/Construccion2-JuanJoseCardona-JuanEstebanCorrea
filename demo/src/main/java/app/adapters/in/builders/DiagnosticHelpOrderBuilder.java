@@ -9,11 +9,11 @@ public class DiagnosticHelpOrderBuilder {
 
     public DiagnosticHelpOrder buildFromConsole() {
         DiagnosticHelpOrder o = new DiagnosticHelpOrder();
-        System.out.print("Numero de orden (orderNumber) (Long) > ");
-        String on = sc.nextLine().trim();
-        if (!on.isEmpty()) {
+        System.out.print("Documento de el paciente (Long) > ");
+        String pd = sc.nextLine().trim();
+        if (!pd.isEmpty()) {
             try {
-                o.setOrderNumber(Long.valueOf(on));
+                o.setPatientDocument(Long.valueOf(pd));
             } catch (NumberFormatException e) {
             }
         }

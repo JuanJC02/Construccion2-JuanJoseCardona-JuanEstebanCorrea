@@ -13,7 +13,7 @@ import app.infrastructure.repository.jpa.*;
 
 @Component
 public class ConsoleAdapter {
-
+    
     private final VisitInputAdapter visitAdapter;
     private final RegisterVisit registerVisit;
     private final ClinicalHistoryAdapterIn clinicalHAdapter;
@@ -24,7 +24,9 @@ public class ConsoleAdapter {
     private final CreateAppointment createAppointment;
     private final BillInputAdapter billInputAdapter;
     private final CreateBill createBill;
-
+    private final DiagnosticHelpOrderInputAdapter diagnosticHelpOrderInputAdapter;
+    private final CreateDiagnosticHelpOrder createDiagnosticHelpOrder;
+    
     @Autowired
     public ConsoleAdapter(VisitInputAdapter visitAdapter,
             RegisterVisit registerVisit,
@@ -35,8 +37,10 @@ public class ConsoleAdapter {
             AppointmentInputAdapter apAdapter,
             CreateAppointment createAppointment,
             BillInputAdapter billInputAdapter,
-            CreateBill createBill) {
-
+            CreateBill createBill,
+            DiagnosticHelpOrderInputAdapter diagnosticHelpOrderInputAdapter,
+            CreateDiagnosticHelpOrder createDiagnosticHelpOrder) {
+        
         this.visitAdapter = visitAdapter;
         this.registerVisit = registerVisit;
         this.clinicalHAdapter = clinicalHAdapter;
@@ -47,13 +51,15 @@ public class ConsoleAdapter {
         this.createAppointment = createAppointment;
         this.billInputAdapter = billInputAdapter;
         this.createBill = createBill;
+        this.diagnosticHelpOrderInputAdapter = diagnosticHelpOrderInputAdapter;
+        this.createDiagnosticHelpOrder = createDiagnosticHelpOrder;
     }
-
+    
     @PostConstruct
     public void start() throws Exception {
         showPrincipalMenu();
     }
-
+    
     public void showPrincipalMenu() throws Exception {
         Scanner scanner = new Scanner(System.in);
         int opcion;
@@ -66,7 +72,7 @@ public class ConsoleAdapter {
             System.out.println("0. Salir del sistema");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
-
+            
             switch (opcion) {
                 case 1 ->
                     showAdministrativoMenu();
@@ -84,7 +90,7 @@ public class ConsoleAdapter {
         } while (opcion != 0);
         scanner.close();
     }
-
+    
     public void showAdministrativoMenu() throws Exception {
         Scanner scanner = new Scanner(System.in);
         int opcion;
@@ -97,7 +103,7 @@ public class ConsoleAdapter {
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
-
+            
             switch (opcion) {
                 case 1:
                     Bill bill = billInputAdapter.buildBillFromConsole();
@@ -133,7 +139,7 @@ public class ConsoleAdapter {
             }
         } while (opcion != 0);
     }
-
+    
     public void showDoctorMenu() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
@@ -148,7 +154,7 @@ public class ConsoleAdapter {
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
-
+            
             switch (opcion) {
                 case 1:
                     ClinicalHistory nueva = clinicalHAdapter.buildHistoryFromConsole();
@@ -169,7 +175,13 @@ public class ConsoleAdapter {
                     }
                     break;
                 case 3:
-                    System.out.println("Crear orden de ayuda diagnóstica (servicio no implementado).");
+                    DiagnosticHelpOrder diagOrder = diagnosticHelpOrderInputAdapter.buildDiagnosticHelpOrderFromConsole();
+                    try {
+                        createDiagnosticHelpOrder.createDiagnosticHelpOrder(diagOrder);
+                        System.out.println("orden de ayuda en el diagnostico creada correctamente.");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
                 case 4:
                     System.out.println("Crear orden de medicamento (servicio no implementado).");
@@ -197,7 +209,7 @@ public class ConsoleAdapter {
             }
         } while (opcion != 0);
     }
-
+    
     public void showHumanResourcesMenu() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
@@ -214,7 +226,7 @@ public class ConsoleAdapter {
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
-
+            
             switch (opcion) {
                 case 1 ->
                     System.out.println("Crear usuario Recursos Humanos (servicio no implementado).");
@@ -239,7 +251,7 @@ public class ConsoleAdapter {
             }
         } while (opcion != 0);
     }
-
+    
     public void showNurseMenu() {
         Scanner scanner = new Scanner(System.in);
         int opcion;
@@ -251,7 +263,7 @@ public class ConsoleAdapter {
             System.out.println("0. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
-
+            
             switch (opcion) {
                 case 1:
                     Visit nuevaVisita = visitAdapter.BuildVisitFromConsole();

@@ -15,17 +15,20 @@ import java.util.stream.Collectors;
 @Component
 public class AppointmentAdapter implements AppointmentPort {
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
-
-    @Autowired
+    private AppointmentRepository repository;
     private AppointmentMapper mapper;
+    
+    @Autowired
+    public AppointmentAdapter(AppointmentRepository repository, AppointmentMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     @Override
     public List<Appointment> findByPatientDocument(String patientDocument) throws Exception {
         Long doc = Long.parseLong(patientDocument);
 
-        List<AppointmentEntity> list = appointmentRepository.findAll()
+        List<AppointmentEntity> list = repository.findAll()
                 .stream()
                 .filter(a -> a.getPatientDocument().equals(doc))
                 .collect(Collectors.toList());
@@ -37,7 +40,7 @@ public class AppointmentAdapter implements AppointmentPort {
 
     @Override
     public Appointment findAppointmentByDocument(Long document) throws Exception {
-        Optional<AppointmentEntity> opt = appointmentRepository.findAll()
+        Optional<AppointmentEntity> opt = repository.findAll()
                 .stream()
                 .filter(a -> a.getPatientDocument().equals(document))
                 .findFirst();
@@ -47,7 +50,7 @@ public class AppointmentAdapter implements AppointmentPort {
 
     @Override
     public Appointment findAppointmentById(Long appointmentID) throws Exception {
-        Optional<AppointmentEntity> opt = appointmentRepository.findById(appointmentID);
+        Optional<AppointmentEntity> opt = repository.findById(appointmentID);
 
         if (opt.isEmpty()) return null;
 
@@ -61,6 +64,6 @@ public class AppointmentAdapter implements AppointmentPort {
         }
 
         AppointmentEntity entity = mapper.toEntity(appointment);
-        appointmentRepository.save(entity);
+        repository.save(entity);
     }
 }

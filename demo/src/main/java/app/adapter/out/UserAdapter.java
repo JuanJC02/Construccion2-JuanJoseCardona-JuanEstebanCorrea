@@ -6,6 +6,7 @@ import app.infrastructure.entity.UserEntity;
 import app.infrastructure.mapper.UserMapper;
 import app.infrastructure.repository.jpa.UserRepository;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,7 @@ public class UserAdapter implements UserPort {
     private final UserRepository repository;
     private final UserMapper mapper;
     
+    @Autowired
     public UserAdapter(UserRepository repository, UserMapper mapper){
         this.repository = repository;
         this.mapper = mapper;

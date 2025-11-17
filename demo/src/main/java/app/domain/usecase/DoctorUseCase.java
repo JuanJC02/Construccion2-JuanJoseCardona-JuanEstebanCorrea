@@ -35,9 +35,9 @@ public class DoctorUseCase {
         }
     }
 
-    public void createDiagnosticHelpOrder(Long actorDocument, Long patientDocument, DiagnosticHelpOrder order) throws Exception {
+    public void createDiagnosticHelpOrder(Long actorDocument, DiagnosticHelpOrder order) throws Exception {
         if(roleValidator.isValidRole(actorDocument, rol)) {
-            createDiagnosticHelpOrder.createDiagnosticHelpOrder(patientDocument, order);
+            createDiagnosticHelpOrder.createDiagnosticHelpOrder(order);
         }
         else{
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
