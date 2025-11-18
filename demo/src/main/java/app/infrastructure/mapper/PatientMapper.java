@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 public class PatientMapper {
 
     public PatientEntity toEntity(Patient domain) {
-        if (domain == null) return null;
+        if (domain == null) {
+            return null;
+        }
 
         PatientEntity entity = new PatientEntity();
         entity.setGender(domain.getGender());
@@ -29,19 +31,13 @@ public class PatientMapper {
         entity.setRole(domain.getRole());
         entity.setPolicyNumber(domain.getPolicyNumber());
 
-        if (domain.getEmergencyContact() != null) {
-            EmergencyContactEntity e = new EmergencyContactEntity();
-            e.setName(domain.getEmergencyContact().getName());
-            e.setPhoneNumber(domain.getEmergencyContact().getPhoneNumber());
-            e.setRelation(domain.getEmergencyContact().getRelation());
-            entity.setEmergencyContact(e);
-        }
-
         return entity;
     }
 
     public Patient toDomain(PatientEntity entity) {
-        if (entity == null) return null;
+        if (entity == null) {
+            return null;
+        }
 
         Patient domain = new Patient();
         domain.setGender(entity.getGender());
@@ -58,15 +54,6 @@ public class PatientMapper {
         domain.setRole(entity.getRole());
         domain.setPolicyNumber(entity.getPolicyNumber());
 
-        if (entity.getEmergencyContact() != null) {
-            EmergencyContact ec = new EmergencyContact();
-            ec.setName(entity.getEmergencyContact().getName());
-            ec.setPhoneNumber(entity.getEmergencyContact().getPhoneNumber());
-            ec.setRelation(entity.getEmergencyContact().getRelation());
-            domain.setEmergencyContact(ec);
-        }
-
         return domain;
     }
 }
-

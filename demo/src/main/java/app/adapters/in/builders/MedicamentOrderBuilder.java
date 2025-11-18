@@ -17,16 +17,16 @@ public class MedicamentOrderBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Nombre del medicamento > ");
         o.setMedicamentName(sc.nextLine().trim());
-        
+
         System.out.print("Dosis > ");
         o.setDose(sc.nextLine().trim());
-        
+
         System.out.print("Duracion del tratamiento > ");
         o.setTreatmentDuration(sc.nextLine().trim());
-        
+
         System.out.print("documento de el paciente (Long) > ");
         String pd = sc.nextLine().trim();
         if (!pd.isEmpty()) {

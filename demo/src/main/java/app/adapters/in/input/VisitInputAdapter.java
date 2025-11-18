@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VisitInputAdapter {
-	
-	private final VisitBuilder builder = new VisitBuilder();
-	
-	public Visit BuildVisitFromConsole() {
-		return builder.buildFromConsole();
-	}
+
+    private final VisitBuilder builder = new VisitBuilder();
+
+    public Visit BuildVisitFromConsole() {
+        return builder.buildFromConsole();
+    }
 
 }

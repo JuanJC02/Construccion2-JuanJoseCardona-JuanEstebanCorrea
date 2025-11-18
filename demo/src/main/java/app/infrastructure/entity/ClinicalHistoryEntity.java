@@ -1,6 +1,5 @@
 package app.infrastructure.entity;
 
-
 import jakarta.persistence.*;
 
 @Entity

@@ -76,6 +76,5 @@ public class Bill {
     public void setPolicyExpirationDate(LocalDate policyExpirationDate) {
         this.policyExpirationDate = policyExpirationDate;
     }
-    
-    
+
 }

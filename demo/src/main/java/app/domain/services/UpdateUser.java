@@ -2,20 +2,28 @@ package app.domain.services;
 
 import app.domain.model.User;
 import app.domain.ports.UserPort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UpdateUser {
 
-    private UserPort userPort;
+    private final UserPort userPort;
+
+    @Autowired
+    public UpdateUser(UserPort userPort) {
+        this.userPort = userPort;
+    }
 
     public void updateUser(User updatedUser) throws Exception {
-        
-        if (updatedUser == null) {
-            throw new Exception("no se puede realizar la accion por falta de datos");
+
+        if (updatedUser == null || updatedUser.getDocument() == null) {
+            throw new Exception("Datos insuficientes para actualizar usuario.");
         }
 
         User userToUpdate = userPort.findByDocument(updatedUser.getDocument());
         if (userToUpdate == null) {
-            throw new Exception("usuario no encontrado: no se pueden actualizar datos");
+            throw new Exception("Usuario no encontrado: no se pueden actualizar datos.");
         }
 
         if (updatedUser.getUsername() != null) {
@@ -39,6 +47,10 @@ public class UpdateUser {
         if (updatedUser.getAddress() != null) {
             userToUpdate.setAddress(updatedUser.getAddress());
         }
+        if (updatedUser.getBirthdate() != null) {
+            userToUpdate.setBirthdate(updatedUser.getBirthdate());
+        }
+
         userPort.update(userToUpdate);
     }
 }

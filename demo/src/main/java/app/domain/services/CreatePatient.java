@@ -1,14 +1,19 @@
 package app.domain.services;
 
-import app.infrastructure.Utilities.GenerateRandomId;
 import app.domain.model.EmergencyContact;
 import app.domain.model.Patient;
+import app.domain.ports.EmergencyContactPort;
 import app.domain.ports.PatientPort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class CreatePatient {
-
+    @Autowired
     private PatientPort patientPort;
-    private GenerateRandomId generateRandomId;
+    @Autowired
+    private EmergencyContactPort emergencyContactPort;
 
     public void createPatient(Patient patient) throws Exception {
         Patient pat2 = patientPort.findByPatient(patient);
@@ -18,22 +23,13 @@ public class CreatePatient {
         if (pat2.getUsername() != null) {
             throw new Exception("ya existe un paciente registrado con ese nombre de usuario");
         }
-        
-        EmergencyContact ec = patient.getEmergencyContact();
+
+        EmergencyContact ec = emergencyContactPort.findByDocument(patient.getDocument());
         ec.setName(patient.getName());
         ec.setLastName(patient.getLastName());
         ec.setPhoneNumber(patient.getPhonenumber());
         ec.setPatientDocument(patient.getDocument());
-        ec.setEmergencyContactID(generateRandomId.generateRandomId());
-        patient.setEmergencyContact(ec);
         patientPort.save(patient);
     }
-
-
-
-
-
-
-
 
 }

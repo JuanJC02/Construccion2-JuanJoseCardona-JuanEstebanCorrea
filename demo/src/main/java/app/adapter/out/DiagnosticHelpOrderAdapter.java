@@ -16,7 +16,7 @@ public class DiagnosticHelpOrderAdapter implements DiagnosticHelpOrderPort {
 
     private final DiagnosticHelpOrderRepository repository;
     private final DiagnosticHelpOrderMapper mapper;
-    
+
     @Autowired
     public DiagnosticHelpOrderAdapter(DiagnosticHelpOrderRepository repository,
             DiagnosticHelpOrderMapper mapper) {
@@ -37,7 +37,7 @@ public class DiagnosticHelpOrderAdapter implements DiagnosticHelpOrderPort {
 
         return entity != null ? mapper.toDomain(entity) : null;
     }
-    
+
     @Override
     public List<DiagnosticHelpOrder> findOrderByPatientDocument(Long document) throws Exception {
 

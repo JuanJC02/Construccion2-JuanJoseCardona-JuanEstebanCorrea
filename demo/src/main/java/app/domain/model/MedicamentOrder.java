@@ -1,7 +1,7 @@
-
 package app.domain.model;
 
 public class MedicamentOrder {
+
     private Long orderId;
     private int itemNumber;
     private String medicamentName;
@@ -56,5 +56,5 @@ public class MedicamentOrder {
     public void setTreatmentDuration(String treatmentDuration) {
         this.treatmentDuration = treatmentDuration;
     }
-    
+
 }

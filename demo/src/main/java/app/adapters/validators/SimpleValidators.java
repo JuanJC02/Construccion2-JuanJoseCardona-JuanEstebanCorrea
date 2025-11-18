@@ -3,7 +3,9 @@ package app.adapters.validators;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.regex.Pattern;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SimpleValidators {
 
     public static final Pattern SIMPLE_EMAIL = Pattern.compile("^[^@\\s]+@[^@\\s]+\\.[^@\\s]{2,}$");

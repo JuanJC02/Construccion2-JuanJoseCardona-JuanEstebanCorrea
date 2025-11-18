@@ -34,8 +34,6 @@ public class ProcedureOrderEntity {
     @Column(nullable = false)
     private Long patientDocument;
 
-    
-
     public Long getPatientDocument() {
         return patientDocument;
     }

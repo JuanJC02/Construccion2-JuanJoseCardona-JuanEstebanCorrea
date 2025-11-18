@@ -17,7 +17,7 @@ public class DiagnosticHelpOrderBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Numero de item (int) > ");
         String it = sc.nextLine().trim();
         if (!it.isEmpty()) {
@@ -26,7 +26,7 @@ public class DiagnosticHelpOrderBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Nombre del examen > ");
         o.setExamName(sc.nextLine().trim());
         System.out.print("Cantidad (int) > ");
@@ -37,7 +37,7 @@ public class DiagnosticHelpOrderBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Costo (int) > ");
         String cost = sc.nextLine().trim();
         if (!cost.isEmpty()) {
@@ -46,13 +46,13 @@ public class DiagnosticHelpOrderBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Requiere especialista? (true/false) > ");
         String rs = sc.nextLine().trim();
         if (!rs.isEmpty()) {
             o.setRequiresSpecialist(Boolean.parseBoolean(rs));
         }
-        
+
         System.out.print("Especialidad Id (Long) [opcional] > ");
         String sid = sc.nextLine().trim();
         if (!sid.isEmpty()) {

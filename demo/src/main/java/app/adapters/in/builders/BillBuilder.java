@@ -12,21 +12,30 @@ public class BillBuilder {
         System.out.print("Documento del paciente (Long) > ");
         String pd = sc.nextLine().trim();
         if (!pd.isEmpty()) {
-            try { b.setPatientDocument(Long.valueOf(pd)); } catch(NumberFormatException e){}
+            try {
+                b.setPatientDocument(Long.valueOf(pd));
+            } catch (NumberFormatException e) {
+            }
         }
-        
+
         System.out.print("Numero de poliza (Long) [opcional] > ");
         String pn = sc.nextLine().trim();
         if (!pn.isEmpty()) {
-            try { b.setPolicyNumber(Long.valueOf(pn)); } catch(NumberFormatException e){}
+            try {
+                b.setPolicyNumber(Long.valueOf(pn));
+            } catch (NumberFormatException e) {
+            }
         }
-        
+
         System.out.print("Documento del medico tratante (Long) > ");
         String mtd = sc.nextLine().trim();
         if (!mtd.isEmpty()) {
-            try { b.setTreatingPhysicianDocument(Long.valueOf(pd)); } catch(NumberFormatException e){}
+            try {
+                b.setTreatingPhysicianDocument(Long.valueOf(pd));
+            } catch (NumberFormatException e) {
+            }
         }
-        
+
         return b;
     }
 }

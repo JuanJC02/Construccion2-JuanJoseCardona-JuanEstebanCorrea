@@ -1,7 +1,7 @@
-
 package app.domain.model;
 
 public class DiagnosticHelpOrder {
+
     private Long orderNumber;
     private int itemNumber;
     private String examName;
@@ -74,5 +74,5 @@ public class DiagnosticHelpOrder {
     public void setSpecialtytId(Long specialtytId) {
         this.specialtytId = specialtytId;
     }
-    
+
 }

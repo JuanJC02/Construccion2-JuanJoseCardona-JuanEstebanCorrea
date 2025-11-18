@@ -21,7 +21,7 @@ public class VisitBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Fecha de la visita (dd/MM/yyyy) > ");
         String d = sc.nextLine().trim();
         if (!d.isEmpty()) {
@@ -31,7 +31,7 @@ public class VisitBuilder {
             } catch (Exception e) {
             }
         }
-        
+
         System.out.print("Presion sanguinea (double) > ");
         String bp = sc.nextLine().trim();
         if (!bp.isEmpty()) {
@@ -40,7 +40,7 @@ public class VisitBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Temperatura (double) > ");
         String t = sc.nextLine().trim();
         if (!t.isEmpty()) {
@@ -49,7 +49,7 @@ public class VisitBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Frecuencia cardiaca (double) > ");
         String hr = sc.nextLine().trim();
         if (!hr.isEmpty()) {
@@ -58,7 +58,7 @@ public class VisitBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Nivel de oxigeno en sangre (double) > ");
         String ox = sc.nextLine().trim();
         if (!ox.isEmpty()) {
@@ -67,7 +67,7 @@ public class VisitBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         return v;
     }
 }

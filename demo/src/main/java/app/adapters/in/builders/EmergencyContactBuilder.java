@@ -13,20 +13,20 @@ public class EmergencyContactBuilder {
         SimpleValidators sv = new SimpleValidators();
         System.out.print("Nombre contacto > ");
         e.setName(sc.nextLine().trim());
-        
+
         System.out.print("Apellido contacto > ");
         e.setLastName(sc.nextLine().trim());
-        
+
         System.out.print("Relacion > ");
         e.setRelation(sc.nextLine().trim());
-        
+
         System.out.print("Telefono contacto > ");
         String phone = sc.nextLine().trim();
         if (!sv.isValidPhone(phone)) {
             throw new IllegalArgumentException("telefono contacto invalido: debe tener 10 digitos");
         }
         e.setPhoneNumber(phone);
-        
+
         System.out.print("Documento de paciente (Long) > ");
         String pd = sc.nextLine().trim();
         if (!pd.isEmpty()) {

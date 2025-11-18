@@ -33,9 +33,8 @@ public class BillEntity {
 
     private LocalDate policyExpirationDate;
 
-    public BillEntity() {}
-
-    
+    public BillEntity() {
+    }
 
     public Long getId() {
         return id;

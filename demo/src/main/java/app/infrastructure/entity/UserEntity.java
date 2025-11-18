@@ -43,11 +43,16 @@ public class UserEntity {
     @Column(nullable = false, length = 30)
     private Role role;
 
-
-    
-
     public String getUsername() {
         return username;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setUsername(String username) {

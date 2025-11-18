@@ -1,4 +1,5 @@
 package app.adapters.in.input;
+
 import app.adapters.in.builders.EmergencyContactBuilder;
 import app.domain.model.EmergencyContact;
 

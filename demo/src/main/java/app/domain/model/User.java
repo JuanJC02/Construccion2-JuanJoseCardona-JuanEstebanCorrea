@@ -1,10 +1,10 @@
-
 package app.domain.model;
 
 import app.domain.model.enums.Role;
 import java.time.LocalDate;
 
-public class User {   
+public class User {
+
     private Long id;
     private String username;
     private String password;
@@ -24,7 +24,6 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
-    
 
     public String getUsername() {
         return username;
@@ -105,6 +104,5 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
-    
-    
+
 }

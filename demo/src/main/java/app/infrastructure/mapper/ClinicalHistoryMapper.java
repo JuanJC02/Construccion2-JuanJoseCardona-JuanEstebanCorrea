@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 public class ClinicalHistoryMapper {
 
     public ClinicalHistoryEntity toEntity(ClinicalHistory domain) {
-        if (domain == null) return null;
+        if (domain == null) {
+            return null;
+        }
 
         ClinicalHistoryEntity entity = new ClinicalHistoryEntity();
 
@@ -23,7 +25,9 @@ public class ClinicalHistoryMapper {
     }
 
     public ClinicalHistory toDomain(ClinicalHistoryEntity entity) {
-        if (entity == null) return null;
+        if (entity == null) {
+            return null;
+        }
 
         ClinicalHistory domain = new ClinicalHistory();
 

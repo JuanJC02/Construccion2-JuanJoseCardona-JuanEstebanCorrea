@@ -22,7 +22,7 @@ public class PatientEntity {
     private String lastName;
 
     private Long document;
-    
+
     private int age;
 
     private String email;
@@ -34,15 +34,10 @@ public class PatientEntity {
 
     private Long policyNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "emergency_contact_id")
-    private EmergencyContactEntity emergencyContact;
 
     public PatientEntity() {
     }
-
-    // ------- GETTERS AND SETTERS ---------
-
+    
     public int getAge() {
         return age;
     }
@@ -149,13 +144,5 @@ public class PatientEntity {
 
     public void setPolicyNumber(Long policyNumber) {
         this.policyNumber = policyNumber;
-    }
-
-    public EmergencyContactEntity getEmergencyContact() {
-        return emergencyContact;
-    }
-
-    public void setEmergencyContact(EmergencyContactEntity emergencyContact) {
-        this.emergencyContact = emergencyContact;
     }
 }

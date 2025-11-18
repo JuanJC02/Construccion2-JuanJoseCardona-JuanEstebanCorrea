@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ClinicalHistoryService {
+
     @Autowired
     private ClinicalHistoryPort clinicalHistoryPort;
     @Autowired
@@ -28,10 +29,10 @@ public class ClinicalHistoryService {
         if (p == null) {
             throw new Exception("paciente no encontrado. con el documento del paciente recibido");
         }
-        if(userPort.findDoctorByDocument(history.getDoctorId()) == null) {
+        if (userPort.findDoctorByDocument(history.getDoctorId()) == null) {
             throw new Exception("no existe un doctor con ese documento");
         }
-        if(!userPort.findDoctorByDocument(history.getDoctorId()).getRole().equals(Role.DOCTOR)) {
+        if (!userPort.findDoctorByDocument(history.getDoctorId()).getRole().equals(Role.DOCTOR)) {
             throw new Exception("El usuario buscado con id de doctor no posee el rol de doctor");
         }
         clinicalHistoryPort.save(history);

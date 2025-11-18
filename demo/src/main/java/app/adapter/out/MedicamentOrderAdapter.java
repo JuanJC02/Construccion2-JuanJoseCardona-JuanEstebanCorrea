@@ -38,10 +38,8 @@ public class MedicamentOrderAdapter implements MedicamentOrderPort {
 
     @Override
     public List<MedicamentOrder> findOrderByPatientDocument(Long document) throws Exception {
-
-        // (Solo si definiste el método en el repository)
-        List<MedicamentOrderEntity> entities =
-                repository.findByPatientDocument(document);
+        List<MedicamentOrderEntity> entities
+                = repository.findByPatientDocument(document);
 
         return entities.stream()
                 .map(mapper::toDomain)

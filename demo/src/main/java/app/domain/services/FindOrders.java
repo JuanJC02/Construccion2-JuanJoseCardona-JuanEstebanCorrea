@@ -7,38 +7,48 @@ import app.domain.ports.DiagnosticHelpOrderPort;
 import app.domain.ports.MedicamentOrderPort;
 import app.domain.ports.ProcedureOrderPort;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FindOrders {
 
-    private MedicamentOrderPort medicamentOrderPort;
-    private ProcedureOrderPort procedureOrderPort;
-    private DiagnosticHelpOrderPort diagnosticHelpOrderPort;
+    private final MedicamentOrderPort medicamentOrderPort;
+    private final ProcedureOrderPort procedureOrderPort;
+    private final DiagnosticHelpOrderPort diagnosticHelpOrderPort;
 
-    public List findOrders(Long patientDocument, String orderType) throws Exception {
-        if(!orderType.equalsIgnoreCase("MEDICAMENT") || !orderType.equalsIgnoreCase("PROCEDURE") || !orderType.equalsIgnoreCase("DIAGNOSTICHELP")) {
-            throw new Exception("tipo de orden invalida");
-        }
+    @Autowired
+    public FindOrders(MedicamentOrderPort medicamentOrderPort,
+                      ProcedureOrderPort procedureOrderPort,
+                      DiagnosticHelpOrderPort diagnosticHelpOrderPort) {
+        this.medicamentOrderPort = medicamentOrderPort;
+        this.procedureOrderPort = procedureOrderPort;
+        this.diagnosticHelpOrderPort = diagnosticHelpOrderPort;
+    }
+
+    public List<?> findOrders(Long patientDocument, String orderType) throws Exception {
 
         if (patientDocument == null) {
-            throw new Exception("el documento de el paciente es nulo");
+            throw new Exception("El documento del paciente es nulo");
         }
-        
-        List<MedicamentOrder> meds;
-        List<ProcedureOrder> procs;
-        List<DiagnosticHelpOrder> diags;
-        
-        if(orderType.equalsIgnoreCase("MEDICAMENT")) {
-            meds = medicamentOrderPort.findOrderByPatientDocument(patientDocument);
-            return meds;
+
+        if (orderType == null || orderType.isBlank()) {
+            throw new Exception("El tipo de orden no puede estar vacío");
         }
-        if(orderType.equalsIgnoreCase("PROCEDURE")) {
-            procs = procedureOrderPort.findOrderByPatientDocument(patientDocument);
-            return procs;
+
+        switch (orderType.toUpperCase()) {
+
+            case "MEDICAMENT":
+                return medicamentOrderPort.findOrderByPatientDocument(patientDocument);
+
+            case "PROCEDURE":
+                return procedureOrderPort.findOrderByPatientDocument(patientDocument);
+
+            case "DIAGNOSTICHELP":
+                return diagnosticHelpOrderPort.findOrderByPatientDocument(patientDocument);
+
+            default:
+                throw new Exception("Tipo de orden inválido: debe ser MEDICAMENT, PROCEDURE o DIAGNOSTICHELP");
         }
-        if(orderType.equalsIgnoreCase("DIAGNOSTICHELP")) {
-            diags = diagnosticHelpOrderPort.findOrderByPatientDocument(patientDocument);
-            return diags;
-        }
-        return null;
     }
 }

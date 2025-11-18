@@ -15,13 +15,13 @@ public class UserAdapter implements UserPort {
 
     private final UserRepository repository;
     private final UserMapper mapper;
-    
+
     @Autowired
-    public UserAdapter(UserRepository repository, UserMapper mapper){
+    public UserAdapter(UserRepository repository, UserMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
-    
+
     @Override
     public User findByDocument(Long document) throws Exception {
         Optional<UserEntity> opt = repository.findAll()
@@ -33,7 +33,7 @@ public class UserAdapter implements UserPort {
             return null;
         }
 
-        return mapper.toDomain(opt.get());
+        return mapper.toModel(opt.get());
     }
 
     @Override
@@ -47,7 +47,7 @@ public class UserAdapter implements UserPort {
             return null;
         }
 
-        return mapper.toDomain(opt.get());
+        return mapper.toModel(opt.get());
     }
 
     @Override

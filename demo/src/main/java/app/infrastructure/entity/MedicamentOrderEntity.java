@@ -23,8 +23,8 @@ public class MedicamentOrderEntity {
 
     private Long patientDocument;
 
-    public MedicamentOrderEntity() {}
-
+    public MedicamentOrderEntity() {
+    }
 
     public Long getOrderId() {
         return orderId;

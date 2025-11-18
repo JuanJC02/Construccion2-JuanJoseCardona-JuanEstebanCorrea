@@ -14,60 +14,53 @@ public class DoctorUseCase {
     private CreateProcedureOrder createProcedureOrder;
     private FindPatient findPatient;
     private RoleValidator roleValidator;
-    
+
     private final Role rol = DOCTOR;
 
     public void createClinicalHistory(Long actorDocument, ClinicalHistory history) throws Exception {
-        if(roleValidator.isValidRole(actorDocument, rol)){
+        if (roleValidator.isValidRole(actorDocument, rol)) {
             clinicalHistoryService.createClinicalHistory(history);
-        }
-        else{
+        } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }
     }
 
     public void updateClinicalHistory(Long actorDocument, ClinicalHistory history) throws Exception {
-        if(roleValidator.isValidRole(actorDocument, rol)){
+        if (roleValidator.isValidRole(actorDocument, rol)) {
             clinicalHistoryService.updateClinicalHistory(history);
-        }
-        else{
+        } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }
     }
 
     public void createDiagnosticHelpOrder(Long actorDocument, DiagnosticHelpOrder order) throws Exception {
-        if(roleValidator.isValidRole(actorDocument, rol)) {
+        if (roleValidator.isValidRole(actorDocument, rol)) {
             createDiagnosticHelpOrder.createDiagnosticHelpOrder(order);
-        }
-        else{
+        } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }
     }
 
     public void createMedicamentOrder(Long actorDocument, MedicamentOrder order) throws Exception {
-        if(roleValidator.isValidRole(actorDocument, rol)) {
-        createMedicamentOrder.createMedicamentOrder(order);
-        }
-        else {
+        if (roleValidator.isValidRole(actorDocument, rol)) {
+            createMedicamentOrder.createMedicamentOrder(order);
+        } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }
     }
 
-    public void createProcedureOrder(Long actorDocument, ProcedureOrder order, Long specialtytId) throws Exception {
-        if(roleValidator.isValidRole(actorDocument, rol)) {
-            createProcedureOrder.createProcedureOrder(order, specialtytId);
-        }
-        else {
+    public void createProcedureOrder(Long actorDocument, ProcedureOrder order) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol)) {
+            createProcedureOrder.createProcedureOrder(order);
+        } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }
     }
-    
-    
-    public Patient findPatient(Long actorDocument,Long patientDocument) throws Exception {
-        if(roleValidator.isValidRole(actorDocument, rol)){
+
+    public Patient findPatient(Long actorDocument, Long patientDocument) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol)) {
             return findPatient.findPatient(patientDocument);
-        }
-        else{
+        } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }
     }

@@ -25,9 +25,9 @@ public class AdministrativeStaffUseCase {
         }
     }
 
-    public void scheduleAppointment(Long actorDocument, Appointment appointment, Date appointmentDate) throws Exception {
+    public void scheduleAppointment(Long actorDocument, Long appointmentId, Date appointmentDate) throws Exception {
         if (roleValidator.isValidRole(actorDocument, rol)) {
-            scheduleAppointment.scheduleAppointment(appointment, appointmentDate);
+            scheduleAppointment.scheduleAppointment(appointmentId, appointmentDate);
         } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }

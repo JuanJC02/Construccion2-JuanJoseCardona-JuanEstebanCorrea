@@ -15,7 +15,7 @@ public class BillAdapter implements BillPort {
 
     private final BillRepository repository;
     private final BillMapper mapper;
-    
+
     @Autowired
     public BillAdapter(BillRepository repository, BillMapper mapper) {
         this.repository = repository;
@@ -35,7 +35,7 @@ public class BillAdapter implements BillPort {
     @Override
     public Bill findById(Long id) throws Exception {
         BillEntity entity = repository.findById(id)
-            .orElseThrow(() -> new Exception("No se encontró una factura con ID: " + id));
+                .orElseThrow(() -> new Exception("No se encontró una factura con ID: " + id));
 
         return BillMapper.toDomain(entity);
     }
@@ -43,7 +43,7 @@ public class BillAdapter implements BillPort {
     @Override
     public int sumCopaysByPatientAndYear(Long patientDocument, int year) throws Exception {
         List<Bill> bills = findByPatientAndYear(patientDocument, year);
-        
+
         //aqui para coopago 
         return 0;
     }
@@ -58,8 +58,8 @@ public class BillAdapter implements BillPort {
 
         return billEntities.stream()
                 .map(BillMapper::toDomain)
-                .filter(b -> b.getPolicyExpirationDate() != null &&
-                             b.getPolicyExpirationDate().getYear() == year)
+                .filter(b -> b.getPolicyExpirationDate() != null
+                && b.getPolicyExpirationDate().getYear() == year)
                 .collect(Collectors.toList());
     }
 }

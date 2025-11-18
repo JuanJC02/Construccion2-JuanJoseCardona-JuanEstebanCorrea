@@ -1,7 +1,7 @@
-
 package app.domain.model;
 
 public class ProcedureOrder {
+
     private Long orderNumber;
     private int itemName;
     private String procedureName;
@@ -19,7 +19,7 @@ public class ProcedureOrder {
     public void setPatientDocument(Long patientDocument) {
         this.patientDocument = patientDocument;
     }
-    
+
     public Long getOrderNumber() {
         return orderNumber;
     }
@@ -83,6 +83,5 @@ public class ProcedureOrder {
     public void setSpecialtytId(Long specialtytId) {
         this.specialtytId = specialtytId;
     }
-    
-    
+
 }

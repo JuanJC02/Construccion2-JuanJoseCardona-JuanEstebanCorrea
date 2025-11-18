@@ -18,15 +18,6 @@ public class Patient {
     private String address;
     private Role role;
     private Long policyNumber;
-    private EmergencyContact emergencyContact;
-
-    public EmergencyContact getEmergencyContact() {
-        return emergencyContact;
-    }
-
-    public void setEmergencyContact(EmergencyContact emergencyContact) {
-        this.emergencyContact = emergencyContact;
-    }
 
     public char getGender() {
         return gender;
@@ -131,7 +122,5 @@ public class Patient {
     public void setPolicyNumber(Long policyNumber) {
         this.policyNumber = policyNumber;
     }
-    
-    
-    
+
 }

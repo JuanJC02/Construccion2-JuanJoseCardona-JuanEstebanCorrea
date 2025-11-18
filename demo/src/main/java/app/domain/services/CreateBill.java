@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreateBill {
-    
+
     @Autowired
     private BillPort billPort;
     @Autowired
@@ -23,8 +23,8 @@ public class CreateBill {
     @Autowired
     private UserPort userPort;
 
-    public void registerBill(Bill bill) throws Exception { 
-        if (bill.getTreatingPhysicianDocument()== null || bill.getTreatingPhysicianDocument().toString().trim().isBlank()) {
+    public void registerBill(Bill bill) throws Exception {
+        if (bill.getTreatingPhysicianDocument() == null || bill.getTreatingPhysicianDocument().toString().trim().isBlank()) {
             throw new Exception("No se ha recibido el documento de el medico tratante");
         }
         if (bill == null) {

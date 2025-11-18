@@ -1,7 +1,7 @@
-
 package app.domain.model;
 
 public class ClinicalHistory {
+
     private String date;
     private Long doctorId;
     private String reasonForConsultation;
@@ -56,6 +56,5 @@ public class ClinicalHistory {
     public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
     }
-    
-    
+
 }

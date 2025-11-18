@@ -8,24 +8,39 @@ public class EmergencyContactEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "emergency_contact_id")
+    private Long emergencyContactID;
 
+    @Column(name = "patient_document", nullable = false)
+    private Long document;
+
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
+    @Column(name = "relation", nullable = false, length = 50)
     private String relation;
 
+    @Column(name = "phone_number", nullable = false, length = 20)
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "emergencyContact")
-    private PatientEntity patient;
-
-    public EmergencyContactEntity() {
+    // Getters & Setters
+    public Long getEmergencyContactID() {
+        return emergencyContactID;
     }
 
-    public Long getId() {
-        return id;
+    public void setEmergencyContactID(Long emergencyContactID) {
+        this.emergencyContactID = emergencyContactID;
+    }
+
+    public Long getDocument() {
+        return document;
+    }
+
+    public void setDocument(Long document) {
+        this.document = document;
     }
 
     public String getName() {
@@ -58,13 +73,5 @@ public class EmergencyContactEntity {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public PatientEntity getPatient() {
-        return patient;
-    }
-
-    public void setPatient(PatientEntity patient) {
-        this.patient = patient;
     }
 }

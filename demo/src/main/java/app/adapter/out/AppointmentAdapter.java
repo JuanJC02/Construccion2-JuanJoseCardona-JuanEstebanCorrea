@@ -17,7 +17,7 @@ public class AppointmentAdapter implements AppointmentPort {
 
     private AppointmentRepository repository;
     private AppointmentMapper mapper;
-    
+
     @Autowired
     public AppointmentAdapter(AppointmentRepository repository, AppointmentMapper mapper) {
         this.repository = repository;
@@ -52,7 +52,9 @@ public class AppointmentAdapter implements AppointmentPort {
     public Appointment findAppointmentById(Long appointmentID) throws Exception {
         Optional<AppointmentEntity> opt = repository.findById(appointmentID);
 
-        if (opt.isEmpty()) return null;
+        if (opt.isEmpty()) {
+            return null;
+        }
 
         return mapper.toDomain(opt.get());
     }

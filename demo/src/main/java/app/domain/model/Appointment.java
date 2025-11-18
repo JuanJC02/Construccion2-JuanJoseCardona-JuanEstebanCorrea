@@ -1,9 +1,9 @@
-
 package app.domain.model;
 
 import java.sql.Date;
 
-public class Appointment{
+public class Appointment {
+
     private Long appointmentId;
     private Date appointmentDate;
     private Long patientDocument;
@@ -32,7 +32,6 @@ public class Appointment{
     public void setPatientDocument(Long patientDocument) {
         this.patientDocument = patientDocument;
     }
-    
 
     public Date getAppointmentDate() {
         return appointmentDate;
@@ -41,5 +40,5 @@ public class Appointment{
     public void setAppointmentDate(Date appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
-    
+
 }

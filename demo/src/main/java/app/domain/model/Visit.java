@@ -1,9 +1,9 @@
-
 package app.domain.model;
 
 import java.sql.Date;
 
 public class Visit {
+
     private Long patientToVisitDocument;
     private Date visitDate;
     private Double bloodPressure;
@@ -58,6 +58,5 @@ public class Visit {
     public void setBloodOxigenLevel(Double bloodOxigenLevel) {
         this.bloodOxigenLevel = bloodOxigenLevel;
     }
-    
-    
+
 }

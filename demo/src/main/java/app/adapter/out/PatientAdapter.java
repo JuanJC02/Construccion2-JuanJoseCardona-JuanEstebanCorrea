@@ -1,4 +1,3 @@
-
 package app.adapter.out;
 
 import app.domain.model.Patient;
@@ -11,10 +10,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PatientAdapter implements PatientPort {
-    
+
     private final PatientRepository repository;
     private final PatientMapper mapper;
-    
+
     @Autowired
     public PatientAdapter(PatientRepository repository, PatientMapper mapper) {
         this.repository = repository;
@@ -23,7 +22,7 @@ public class PatientAdapter implements PatientPort {
 
     @Override
     public Patient findByPatient(Patient patient) throws Exception {
-        if(patient != null) {
+        if (patient != null) { //cambiar. buscar por repositorio
             return new Patient();
         }
         return null;
@@ -31,9 +30,9 @@ public class PatientAdapter implements PatientPort {
 
     @Override
     public Patient findByDocument(Long document) throws Exception {
-        if(document != null) {
+        if (document != null) { //cambiar. buscar por repositorio
             return new Patient();
-        } 
+        }
         return null;
     }
 
@@ -42,5 +41,5 @@ public class PatientAdapter implements PatientPort {
         PatientEntity entity = mapper.toEntity(patient);
         repository.save(entity);
     }
-    
+
 }

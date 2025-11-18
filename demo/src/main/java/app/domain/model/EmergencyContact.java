@@ -1,6 +1,7 @@
 package app.domain.model;
 
 public class EmergencyContact {
+
     private String name;
     private String lastName;
     private String Relation;
@@ -55,5 +56,5 @@ public class EmergencyContact {
     public void setEmergencyContactID(Long emergencyContactID) {
         this.emergencyContactID = emergencyContactID;
     }
-    
+
 }

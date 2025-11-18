@@ -7,5 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
+
     Optional<PatientEntity> findByDocument(Long document);
 }

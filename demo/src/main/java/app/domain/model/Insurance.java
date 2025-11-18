@@ -1,9 +1,9 @@
-
 package app.domain.model;
 
 import java.time.LocalDate;
 
 public class Insurance {
+
     private String companyName;
     private Long policyNumber;
     private boolean policyStatus;
@@ -50,5 +50,4 @@ public class Insurance {
         this.policyExpirationDate = policyExpirationDate;
     }
 
-    
 }

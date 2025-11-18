@@ -1,6 +1,5 @@
 package app.infrastructure.entity;
 
-
 import jakarta.persistence.*;
 import java.sql.Date;
 
@@ -29,7 +28,6 @@ public class VisitEntity {
 
     @Column
     private Double bloodOxigenLevel;
-
 
     public Long getId() {
         return id;

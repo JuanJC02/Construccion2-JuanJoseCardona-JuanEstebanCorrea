@@ -69,9 +69,9 @@ public class HumanResourcesUseCase {
         }
     }
 
-    public void changeRole(Long actorDocument, Role newRole, User user) throws Exception {
+    public void changeRole(Long actorDocument, Long document, Role newRole) throws Exception {
         if (roleValidator.isValidRole(actorDocument, rol)) {
-            rolManager.changeRole(newRole, user);
+            rolManager.changeRole(document, newRole);
         } else {
             throw new Exception("no se puede ejecutar la accion por falta de permisos");
         }

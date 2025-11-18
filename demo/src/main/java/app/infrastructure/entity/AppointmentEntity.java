@@ -10,13 +10,14 @@ public class AppointmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointmentId;
-    
+
     private Date appointmentDate;
     private Long patientDocument;
     private Long attendingPhysicianDocument;
 
-    public AppointmentEntity() {}
-    
+    public AppointmentEntity() {
+    }
+
     public Long getAppointmentId() {
         return appointmentId;
     }

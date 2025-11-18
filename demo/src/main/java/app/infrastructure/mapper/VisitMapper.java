@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 public class VisitMapper {
 
     public VisitEntity toEntity(Visit visit) {
-        if (visit == null) return null;
+        if (visit == null) {
+            return null;
+        }
 
         VisitEntity entity = new VisitEntity();
         entity.setPatientToVisitDocument(visit.getPatientToVisitDocument());
@@ -22,7 +24,9 @@ public class VisitMapper {
     }
 
     public Visit toModel(VisitEntity entity) {
-        if (entity == null) return null;
+        if (entity == null) {
+            return null;
+        }
 
         Visit visit = new Visit();
         visit.setPatientToVisitDocument(entity.getPatientToVisitDocument());

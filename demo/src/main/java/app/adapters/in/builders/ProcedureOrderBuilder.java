@@ -17,7 +17,7 @@ public class ProcedureOrderBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Nombre del procedimiento > ");
         o.setProcedureName(sc.nextLine().trim());
         System.out.print("Numero de repeticion (int) > ");
@@ -28,7 +28,7 @@ public class ProcedureOrderBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Frecuencia (int) > ");
         String fr = sc.nextLine().trim();
         if (!fr.isEmpty()) {
@@ -37,7 +37,7 @@ public class ProcedureOrderBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Costo (int) > ");
         String cost = sc.nextLine().trim();
         if (!cost.isEmpty()) {
@@ -46,13 +46,13 @@ public class ProcedureOrderBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         System.out.print("Requiere especialista? (true/false) > ");
         String rs = sc.nextLine().trim();
         if (!rs.isEmpty()) {
             o.setRequiresSpecialist(Boolean.parseBoolean(rs));
         }
-        
+
         System.out.print("Especialidad Id (Long) [opcional] > ");
         String sid = sc.nextLine().trim();
         if (!sid.isEmpty()) {
@@ -61,7 +61,7 @@ public class ProcedureOrderBuilder {
             } catch (NumberFormatException e) {
             }
         }
-        
+
         return o;
     }
 }

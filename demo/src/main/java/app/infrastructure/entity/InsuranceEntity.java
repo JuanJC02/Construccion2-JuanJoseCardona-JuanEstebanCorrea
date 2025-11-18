@@ -1,4 +1,3 @@
-
 package app.infrastructure.entity;
 
 import java.time.LocalDate;
@@ -7,10 +6,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Insurance")
 public class InsuranceEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long insuranceId;
-    
+
     private String companyName;
     private Long policyNumber;
     private boolean policyStatus;
@@ -65,5 +65,4 @@ public class InsuranceEntity {
         this.policyExpirationDate = policyExpirationDate;
     }
 
-    
 }

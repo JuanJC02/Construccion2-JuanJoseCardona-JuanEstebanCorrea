@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreateMedicamentOrder {
-    
+
     @Autowired
     private MedicamentOrderPort medicamentOrderPort;
     @Autowired
