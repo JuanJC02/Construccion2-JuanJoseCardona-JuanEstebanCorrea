@@ -1,4 +1,4 @@
-// ConsoleAdapter.java (modificado para agregar lógica de búsqueda y actualización)
+//Intercambiar para que se use casos de uso en lugar de servicios directamente
 package app.adapters.in.input;
 
 import app.adapter.out.BillAdapter;
@@ -7,7 +7,12 @@ import app.domain.model.enums.Role;
 import app.domain.ports.DiagnosticHelpOrderPort;
 import app.domain.ports.MedicamentOrderPort;
 import app.domain.ports.ProcedureOrderPort;
+import app.domain.ports.UserPort;
 import app.domain.services.*;
+import app.domain.usecase.AdministrativeStaffUseCase;
+import app.domain.usecase.DoctorUseCase;
+import app.domain.usecase.HumanResourcesUseCase;
+import app.domain.usecase.NurseUseCase;
 import jakarta.annotation.PostConstruct;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +25,14 @@ import java.sql.Date;
 
 @Component
 public class ConsoleAdapter {
-
+    
+    
+    private final AdministrativeStaffUseCase administrativeStaffUseCase;
+    private UserPort userPort;
+    private final DoctorUseCase doctorUseCase;
+    private final HumanResourcesUseCase humanResourcesUseCase;
+    private final NurseUseCase nurseUseCase;
+    
     private final VisitInputAdapter visitAdapter;
     private final RegisterVisit registerVisit;
     private final ClinicalHistoryAdapterIn clinicalHAdapter;
@@ -51,6 +63,7 @@ public class ConsoleAdapter {
     private final MedicamentOrderPort medicamentOrderPort;
     private final ProcedureOrderPort procedureOrderPort;
     private final DiagnosticHelpOrderPort diagnosticHelpOrderPort;
+    private final RoleValidator roleValidator;
 
     @Autowired
     public ConsoleAdapter(VisitInputAdapter visitAdapter,
@@ -82,7 +95,12 @@ public class ConsoleAdapter {
             FindOrders findOrders,
             MedicamentOrderPort medicamentOrderPort,
             ProcedureOrderPort procedureOrderPort,
-            DiagnosticHelpOrderPort diagnosticHelpOrderPort) {
+            DiagnosticHelpOrderPort diagnosticHelpOrderPort,
+            RoleValidator roleValidator,
+            AdministrativeStaffUseCase administrativeStaffUseCase,
+            DoctorUseCase doctorUseCase,
+            HumanResourcesUseCase humanResourcesUseCase,
+            NurseUseCase nurseUseCase) {
 
         this.visitAdapter = visitAdapter;
         this.registerVisit = registerVisit;
@@ -114,12 +132,33 @@ public class ConsoleAdapter {
         this.medicamentOrderPort = medicamentOrderPort;
         this.procedureOrderPort = procedureOrderPort;
         this.diagnosticHelpOrderPort = diagnosticHelpOrderPort;
+        this.roleValidator = roleValidator;
+        this.administrativeStaffUseCase = administrativeStaffUseCase;
+        this.doctorUseCase = doctorUseCase;
+        this.humanResourcesUseCase = humanResourcesUseCase;
+        this.nurseUseCase = nurseUseCase;
     }
 
     @PostConstruct
     public void start() throws Exception {
-        showPrincipalMenu();
+        showLogin();
     }
+    User u;
+    public void showLogin() throws Exception {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingresa el documento de quien usara el programa: ");
+        Long s = scanner.nextLong();
+        if(roleValidator.Validar(s)) {
+            u = userPort.findByDocument(s);
+            showPrincipalMenu();
+        } else {
+            u = userInputAdapter.buildUserFromConsole();
+            u.setRole(Role.DEVELOP);
+            userPort.save(u);
+        }
+    }
+  
+   
 
     public void showPrincipalMenu() throws Exception {
         Scanner scanner = new Scanner(System.in);
@@ -169,7 +208,7 @@ public class ConsoleAdapter {
                 case 1:
                     Bill bill = billInputAdapter.buildBillFromConsole();
                     try {
-                        createBill.registerBill(bill);
+                        administrativeStaffUseCase.registerBill(u.getDocument(), bill);
                         System.out.println("Factura creada correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
@@ -185,7 +224,7 @@ public class ConsoleAdapter {
                     Date fechaSQL = Date.valueOf(fecha);
 
                     try {
-                        scheduleAppointment.scheduleAppointment(idCita, fechaSQL);
+                        administrativeStaffUseCase.scheduleAppointment(u.getDocument(),idCita, fechaSQL);
                         System.out.println("La cita ha sido programada correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error al programar cita: " + e.getMessage());
@@ -194,7 +233,7 @@ public class ConsoleAdapter {
                 case 3:
                     Appointment nuevo = apAdapter.buildAppointmentFromConsole();
                     try {
-                        createAppointment.createAppointment(nuevo);
+                        administrativeStaffUseCase.createAppointment(u.getDocument(), nuevo);
                         System.out.println("Cita creada correctamente.");
                         System.out.println("Ahora tienes que programarla.");
                     } catch (Exception e) {
@@ -204,7 +243,7 @@ public class ConsoleAdapter {
                 case 4:
                     Patient patient = patientInputAdapter.buildPatientFromConsole();
                     try {
-                        createPatient.createPatient(patient);
+                        administrativeStaffUseCase.createPatient(u.getDocument(), patient);
                         System.out.println("paciente creado correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
@@ -239,7 +278,7 @@ public class ConsoleAdapter {
                 case 1:
                     ClinicalHistory nueva = clinicalHAdapter.buildHistoryFromConsole();
                     try {
-                        clinicalHService.createClinicalHistory(nueva);
+                        doctorUseCase.createClinicalHistory(u.getDocument(), nueva);
                         System.out.println("Historia clínica creada correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
@@ -248,7 +287,7 @@ public class ConsoleAdapter {
                 case 2:
                     ClinicalHistory actual = clinicalHAdapter.buildHistoryFromConsole();
                     try {
-                        clinicalHService.updateClinicalHistory(actual);
+                        doctorUseCase.updateClinicalHistory(u.getDocument(), actual);
                         System.out.println("Historia clínica actualizada correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
@@ -257,7 +296,7 @@ public class ConsoleAdapter {
                 case 3:
                     DiagnosticHelpOrder diagOrder = diagnosticHelpOrderInputAdapter.buildDiagnosticHelpOrderFromConsole();
                     try {
-                        createDiagnosticHelpOrder.createDiagnosticHelpOrder(diagOrder);
+                        doctorUseCase.createDiagnosticHelpOrder(u.getDocument(), diagOrder);
                         System.out.println("orden de ayuda en el diagnostico creada correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
@@ -266,7 +305,7 @@ public class ConsoleAdapter {
                 case 4:
                     MedicamentOrder medOrder = medicamentOrderInputAdapter.buildMedicalOrderFromConsole();
                     try {
-                        createMedicamentOrder.createMedicamentOrder(medOrder);
+                        doctorUseCase.createMedicamentOrder(u.getDocument(), medOrder);
                         System.out.println("orden de medicamento creada correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
@@ -275,13 +314,14 @@ public class ConsoleAdapter {
                 case 5:
                     ProcedureOrder proceOrder = procedureOrderInputAdapter.buildProcedureOrderFromConsole();
                     try {
-                        createProcedureOrder.createProcedureOrder(proceOrder);
+                        doctorUseCase.createProcedureOrder(u.getDocument(), proceOrder);
                         System.out.println("La orden de procedimiento medico ha sido creada correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
                     }
                     break;
                 case 6:
+                    if(u.getRole() == Role.DOCTOR || u.getRole() == Role.DEVELOP){
                     System.out.print("Ingrese el documento del paciente a buscar: ");
                     Long doc = scanner.nextLong();
                     PatientEntity paciente = patientRepository.findByDocument(doc).orElse(null);
@@ -290,6 +330,9 @@ public class ConsoleAdapter {
                                 + paciente.getName() + " " + paciente.getLastName());
                     } else {
                         System.out.println("Paciente no encontrado.");
+                    }
+                    } else {
+                        System.out.println("Sin Permisos.");
                     }
                     break;
                 case 0:
@@ -324,7 +367,7 @@ public class ConsoleAdapter {
                     User rhUser = userInputAdapter.buildUserFromConsole();
                     try {
                         rhUser.setRole(Role.HUMAN_RESOURCES);
-                        createUser.create(rhUser);
+                        humanResourcesUseCase.createHumanResourcesUser(u.getDocument(), rhUser);
                         System.out.println("El usuario ha sido creado correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
@@ -334,7 +377,7 @@ public class ConsoleAdapter {
                     User adUser = userInputAdapter.buildUserFromConsole();
                     try {
                         adUser.setRole(Role.ADMINISTRATIVE_STAFF);
-                        createUser.create(adUser);
+                        humanResourcesUseCase.createAdministrativeStaffUser(u.getDocument(), adUser);
                         System.out.println("El usuario ha sido creado correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
@@ -344,7 +387,7 @@ public class ConsoleAdapter {
                     User iUser = userInputAdapter.buildUserFromConsole();
                     try {
                         iUser.setRole(Role.INFORMATION_SUPPORT);
-                        createUser.create(iUser);
+                        humanResourcesUseCase.createInformationSupportUser(u.getDocument(), iUser);
                         System.out.println("El usuario ha sido creado correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
@@ -354,7 +397,7 @@ public class ConsoleAdapter {
                     User eUser = userInputAdapter.buildUserFromConsole();
                     try {
                         eUser.setRole(Role.NURSE);
-                        createUser.create(eUser);
+                        humanResourcesUseCase.createNurseUser(u.getDocument(), eUser);
                         System.out.println("El usuario ha sido creado correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
@@ -364,13 +407,14 @@ public class ConsoleAdapter {
                     User dUser = userInputAdapter.buildUserFromConsole();
                     try {
                         dUser.setRole(Role.DOCTOR);
-                        createUser.create(dUser);
+                        humanResourcesUseCase.createDoctorUser(u.getDocument(), dUser);
                         System.out.println("El usuario ha sido creado correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
                     }
                     break;
                 case 6:
+                    if(u.getRole() == Role.HUMAN_RESOURCES || u.getRole() == Role.DEVELOP) {
                     System.out.print("Ingrese el documento del usuario a Eliminar: ");
                     Long doc = scanner.nextLong();
                     UserEntity user = userRepository.findByDocument(doc).orElse(null);
@@ -379,8 +423,12 @@ public class ConsoleAdapter {
                     }
                     deleteUser.delete(uMapper.toModel(user));
                     System.out.println("Usuario Eliminado Satisfactoriamente");
+                    } else {
+                        System.out.println("Sin Permisos");
+                    }
                     break;
                 case 7:
+                    if(u.getRole() == Role.HUMAN_RESOURCES || u.getRole() == Role.DEVELOP){
                     System.out.print("Ingrese el documento del usuario: ");
                     Long doc3 = scanner.nextLong();
 
@@ -404,9 +452,12 @@ public class ConsoleAdapter {
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
                     }
+                    } else {
+                        System.out.println("Falta de Permisos");
+                    }
                     break;
                 case 8:
-
+                    if(u.getRole() == Role.HUMAN_RESOURCES || u.getRole() == Role.DEVELOP) {
                     System.out.print("Ingrese el documento del usuario a actualizar: ");
                     Long docUpdate = scanner.nextLong();
                     scanner.nextLine();
@@ -469,6 +520,9 @@ public class ConsoleAdapter {
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
                     }
+                    } else {
+                        System.out.println("Falta de Permisos");
+                    }
                     break;
                 case 0:
                     System.out.println("Volviendo...");
@@ -496,13 +550,14 @@ public class ConsoleAdapter {
                 case 1:
                     Visit nuevaVisita = visitAdapter.BuildVisitFromConsole();
                     try {
-                        registerVisit.registerVisit(nuevaVisita);
+                        nurseUseCase.registerVisit(u.getDocument(), nuevaVisita);
                         System.out.println("Visita registrada correctamente.");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
                     }
                     break;
                 case 2:
+                    if(u.getRole() == Role.NURSE || u.getRole() == Role.DEVELOP) {
                     System.out.print("Ingrese el documento del paciente a buscar: ");
                     Long doc2 = scanner.nextLong();
                     PatientEntity paciente2 = patientRepository.findByDocument(doc2).orElse(null);
@@ -511,6 +566,9 @@ public class ConsoleAdapter {
                                 + paciente2.getName() + " " + paciente2.getLastName());
                     } else {
                         System.out.println("Paciente no encontrado.");
+                    }
+                    } else {
+                        System.out.println("Falta de Permisos");
                     }
                     break;
                 case 3:
@@ -553,7 +611,7 @@ public class ConsoleAdapter {
                                 diagnosticHelpOrderPort
                         );
 
-                        var orders = findOrders.findOrders(docP, orderType);
+                        var orders = nurseUseCase.findOrders(u.getDocument(), docP, orderType);
 
                         if (orders.isEmpty()) {
                             System.out.println("No se encontraron órdenes para este paciente.");

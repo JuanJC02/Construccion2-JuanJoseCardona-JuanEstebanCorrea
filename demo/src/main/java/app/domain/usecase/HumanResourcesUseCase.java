@@ -4,8 +4,12 @@ import app.domain.model.*;
 import app.domain.services.*;
 import app.domain.model.enums.Role;
 import static app.domain.model.enums.Role.HUMAN_RESOURCES;
-import app.adapters.validators.RoleValidator;
 
+import org.springframework.stereotype.Component;
+
+import app.adapters.validators.RoleValidator;
+import static app.domain.model.enums.Role.DEVELOP;
+@Component
 public class HumanResourcesUseCase {
 
     private CreateUser createUser;
@@ -15,8 +19,13 @@ public class HumanResourcesUseCase {
     private RoleValidator roleValidator;
 
     private final Role rol = HUMAN_RESOURCES;
+    private final Role rol2 = DEVELOP;
 
     public void createHumanResourcesUser(Long actorDocument, User user) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            user.setRole(Role.HUMAN_RESOURCES);
+            createUser.create(user);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             user.setRole(Role.HUMAN_RESOURCES);
             createUser.create(user);
@@ -26,6 +35,10 @@ public class HumanResourcesUseCase {
     }
 
     public void createAdministrativeStaffUser(Long actorDocument, User user) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            user.setRole(Role.ADMINISTRATIVE_STAFF);
+            createUser.create(user);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             user.setRole(Role.ADMINISTRATIVE_STAFF);
             createUser.create(user);
@@ -35,6 +48,10 @@ public class HumanResourcesUseCase {
     }
 
     public void createInformationSupportUser(Long actorDocument, User user) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            user.setRole(Role.INFORMATION_SUPPORT);
+            createUser.create(user);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             user.setRole(Role.INFORMATION_SUPPORT);
             createUser.create(user);
@@ -44,6 +61,10 @@ public class HumanResourcesUseCase {
     }
 
     public void createNurseUser(Long actorDocument, User user) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            user.setRole(Role.NURSE);
+            createUser.create(user);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             user.setRole(Role.NURSE);
             createUser.create(user);
@@ -53,6 +74,10 @@ public class HumanResourcesUseCase {
     }
 
     public void createDoctorUser(Long actorDocument, User user) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            user.setRole(Role.DOCTOR);
+            createUser.create(user);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             user.setRole(Role.DOCTOR);
             createUser.create(user);
@@ -62,6 +87,9 @@ public class HumanResourcesUseCase {
     }
 
     public void deleteUser(Long actorDocument, User user) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            deleteUser.delete(user);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             deleteUser.delete(user);
         } else {
@@ -70,6 +98,9 @@ public class HumanResourcesUseCase {
     }
 
     public void changeRole(Long actorDocument, Long document, Role newRole) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            rolManager.changeRole(document, newRole);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             rolManager.changeRole(document, newRole);
         } else {
@@ -78,6 +109,9 @@ public class HumanResourcesUseCase {
     }
 
     public void updateUser(Long actorDocument, User updatedUser) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            userManager.updateUser(updatedUser);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             userManager.updateUser(updatedUser);
         } else {

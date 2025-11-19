@@ -3,9 +3,13 @@ package app.domain.usecase;
 import app.domain.model.*;
 import app.domain.model.enums.Role;
 import static app.domain.model.enums.Role.DOCTOR;
+
+import org.springframework.stereotype.Component;
+
 import app.domain.services.*;
 import app.adapters.validators.RoleValidator;
-
+import static app.domain.model.enums.Role.DEVELOP;
+@Component
 public class DoctorUseCase {
 
     private ClinicalHistoryService clinicalHistoryService;
@@ -16,8 +20,12 @@ public class DoctorUseCase {
     private RoleValidator roleValidator;
 
     private final Role rol = DOCTOR;
+    private final Role rol2 = DEVELOP;
 
     public void createClinicalHistory(Long actorDocument, ClinicalHistory history) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            clinicalHistoryService.createClinicalHistory(history);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             clinicalHistoryService.createClinicalHistory(history);
         } else {
@@ -26,6 +34,9 @@ public class DoctorUseCase {
     }
 
     public void updateClinicalHistory(Long actorDocument, ClinicalHistory history) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            clinicalHistoryService.updateClinicalHistory(history);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             clinicalHistoryService.updateClinicalHistory(history);
         } else {
@@ -34,6 +45,9 @@ public class DoctorUseCase {
     }
 
     public void createDiagnosticHelpOrder(Long actorDocument, DiagnosticHelpOrder order) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            createDiagnosticHelpOrder.createDiagnosticHelpOrder(order);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             createDiagnosticHelpOrder.createDiagnosticHelpOrder(order);
         } else {
@@ -42,6 +56,9 @@ public class DoctorUseCase {
     }
 
     public void createMedicamentOrder(Long actorDocument, MedicamentOrder order) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            createMedicamentOrder.createMedicamentOrder(order);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             createMedicamentOrder.createMedicamentOrder(order);
         } else {
@@ -50,6 +67,9 @@ public class DoctorUseCase {
     }
 
     public void createProcedureOrder(Long actorDocument, ProcedureOrder order) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            createProcedureOrder.createProcedureOrder(order);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             createProcedureOrder.createProcedureOrder(order);
         } else {
@@ -58,6 +78,9 @@ public class DoctorUseCase {
     }
 
     public Patient findPatient(Long actorDocument, Long patientDocument) throws Exception {
+        if (roleValidator.isValidRole(actorDocument, rol2)) {
+            return findPatient.findPatient(patientDocument);
+        }
         if (roleValidator.isValidRole(actorDocument, rol)) {
             return findPatient.findPatient(patientDocument);
         } else {
